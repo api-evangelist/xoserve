@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+  title: Shipper
+  description: The Formula Year AQ is used to calculate the billing rates that will be applied in the coming financial year and by the Shipper/Suppliers to quote customers.The purpose of this API is to enable Shippers to view the proposed Formula Year (Billing) AQ value prior to the notification sent to the current Shipper in late March.
+  version: v1
+servers:
+  - url: https://discoveryapi.correla.com/shipper
+paths: { }
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: APIKey
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - { }
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

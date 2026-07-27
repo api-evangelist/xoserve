@@ -1,0 +1,378 @@
+aid: xoserve
+name: Xoserve
+review:
+  question: >-
+    Does Xoserve, as Great Britain's Central Data Services Provider for gas, publish a real,
+    documented public API surface — and is any of it driven by a consumer data mandate?
+  answer: partial
+  date: '2026-07-27'
+  reviewer: API Evangelist
+  summary: >-
+    Yes to a real, documented API surface; no to a consumer data mandate. Xoserve publishes
+    four documented REST APIs through the Discovery API Platform developer portal operated by
+    its service provider Correla. The portal is genuinely public — the API and product
+    catalogue, operation definitions and OpenAPI exports are all retrievable anonymously —
+    but the gateway is closed to everyone who is not an eligible, contracted GB gas industry
+    party. None of it implements Green Button, ESPI, the Consumer Data Standards, or any
+    other consumer data-portability standard, because Britain has imposed no such obligation
+    on the gas CDSP.
+
+market_seam:
+  home_market: United Kingdom (Great Britain gas market)
+  tier: system-operator / central data services provider
+  positioning: >-
+    Xoserve Limited is the Central Data Services Provider (CDSP) for GB's gas market,
+    "funded, governed and owned by the gas industry." It holds the central register of every
+    gas supply point in Britain and runs UK Link, the Gemini transmission system, the Gas
+    Enquiry Service (GES), the Contact Management Service (CMS), Cloud Information Exchange
+    (CIX), SwitchStream and the Data Discovery Platform (DDP). Day-to-day platform delivery
+    is by Correla, which is why the API estate lives on correla.com hosts rather than
+    xoserve.com. Britain mandated this central data infrastructure; it did not mandate a
+    consumer data right on top of it.
+
+mandate:
+  regime: other
+  regime_verbatim: >-
+    Uniform Network Code (UNC) plus the Data Services Contract (DSC) between Xoserve and the
+    Gas Transporters, Independent Gas Transporters and Shippers; further obligations under
+    the Retail Energy Code (REC), under which the Gas Enquiry Service APIs (Supply Point
+    Enquiry, Supply Point Switching, Meter Asset Enquiry) are made available and access is
+    granted by the Retail Energy Code Company (RECCo), not by Xoserve. This is a
+    market-infrastructure mandate on a monopoly central data provider — structurally the
+    same species as the Smart DCC licence — and it is emphatically NOT a consumer data
+    right. It is not the Australian CDR, it is not Ontario's Green Button regulation, and it
+    is not a Green Button voluntary adoption. There is no obligation on Xoserve to expose an
+    individual gas consumer's data to a third party of that consumer's choosing.
+  status: live-implemented
+  status_evidence: >-
+    Verified as implemented, not merely claimed. (1) The developer portal
+    https://discoveryapiportal.correla.com/ returned HTTP 200 on 2026-07-27 and its Azure API
+    Management data plane answered anonymously: /developer/apis?api-version=2022-04-01-preview
+    returned exactly four APIs (meter-asset v1, meter-asset v2, shipper, supplier) and
+    /developer/products returned three products (meter-asset-enquiry, supply-point-enquiry,
+    supply-point-quantities), each with subscriptionRequired=true and approvalRequired=true.
+    (2) Each API's own OpenAPI 3.0.1 export was retrieved from the provider's export endpoint
+    and saved verbatim to openapi/. (3) The live gateway was probed anonymously:
+    https://discoveryapi.correla.com/shipper/v1, /supplier/v1, /meter-asset/v1 and
+    /meter-asset/v2 all returned HTTP 401 "Access denied due to missing subscription key",
+    while the gateway root returned HTTP 404 — proving the routes exist and are live rather
+    than aspirational. What is NOT implemented is any consumer data-right surface; there is
+    nothing to verify there because nothing obliges it.
+  what_would_have_been_a_claim_not_an_implementation: >-
+    The Xoserve "Gas APIs" marketing page alone would only have been a claim. The
+    implementation evidence is the anonymous portal catalogue, the exported OpenAPI
+    documents, and the 401-versus-404 behaviour of the live gateway.
+
+data_standard:
+  implemented: none
+  detail: >-
+    No standard reference found. Payload shapes are a proprietary GB gas market schema keyed
+    on MPRN (Meter Point Reference Number), MSN (Meter Serial Number), Address ID, Annual
+    Quantity (AQ), SOQ, exit zone, local distribution zone and market sector code — the UNC/REC
+    data vocabulary, not an international standard. No Green Button / ESPI, no NAESB, no CDR
+    Consumer Data Standards, no IEC CIM 61968/61970, no OpenADR, no IEEE 2030.5, no OCPP/OCPI.
+    The one genuine standards artifact Xoserve does maintain is adjacent, not API-borne: it
+    issues and publishes ENTSO-E Energy Identification Codes (EIC) and the Market Domain Data
+    (MDD) participant list, and both are distributed as spreadsheet documents on the website
+    rather than through an API.
+
+consumer_vs_market_data:
+  consumer_data_api: true
+  consumer_data_detail: >-
+    True on a technicality that is itself the finding. A third party CAN obtain an individual
+    premise's consumption-related data through a documented API: the Shipper API returns a
+    named MPRN's current and proposed Formula Year AQ and SOQ values plus network attributes,
+    and the Supplier API returns supply meter point detail resolvable from a postcode and
+    address. But the gate is industry accreditation, never consumer consent. The requesting
+    party must be a licensed GB gas Shipper (for Supply Point Quantities) or a REC party (for
+    the GES APIs). There is no consent flow, no authorisation screen, no data-recipient
+    accreditation register open to fintech-style third parties, and no route by which a gas
+    consumer or an agent acting for them can obtain their own data through this API. The
+    consumer-facing equivalent is a web form, not an API — see market_data_detail.
+  market_data_open: false
+  market_data_detail: >-
+    False. Xoserve publishes no open, anonymous, machine-readable market or system data API.
+    This is the sharpest contrast in the UK energy stack: Elexon's Insights Solution API and
+    NESO's Carbon Intensity API are keyless and open, while the gas CDSP's entire API estate
+    sits behind subscription keys. Xoserve's genuinely public outputs are documents and web
+    apps, not feeds: the Market Domain Data (MDD) market-participant list as an XLSX download
+    at https://www.xoserve.com/products-services/market-participant-data/market-domain-data-mdd/
+    (HTTP 200), the Energy Identification Codes page, and the free consumer lookup at
+    https://www.findmysupplier.energy/ (HTTP 200), which Xoserve operates — its terms state
+    "Xoserve Limited ('Xoserve' or 'we') operates the findmysupplier service." No RSS feed was
+    found (/rss and /news/rss both 404). No sitemap.xml (404). No security.txt (404).
+  observed_but_undocumented: >-
+    The findmysupplier front end ships a client configuration file
+    (https://www.findmysupplier.energy/env.js, HTTP 200) that points at three further gateway
+    routes on the same Correla host — /mnumber/v1/paf, /mnumber/v1/supplier and /fms/generate
+    — alongside a browser-embedded subscription key. These routes are NOT listed in the
+    developer portal, are NOT documented anywhere public, and are NOT counted as APIs in
+    apis.yml. Recorded here as an observation only; the embedded key is deliberately not
+    reproduced and was not used.
+
+access:
+  gate: accredited-only
+  how_a_developer_actually_gets_in: >-
+    There is no self-serve signup that ends in a working key. Browsing is open: anyone can
+    read https://discoveryapiportal.correla.com/apis and /products and export the OpenAPI
+    documents without an account. Calling is not. Every product carries both
+    subscriptionRequired=true and approvalRequired=true, and eligibility is a regulated-status
+    test before it is a paperwork test. For the Supply Point Quantities API the audience is
+    Gas Shippers only, and the route is to email Xoserve's Customer Life Cycle team
+    (xoserve.customer.lifecycle.team@xoserve.co.uk); credentials are issued only after the
+    subscription contract is countersigned, priced in annual call-allowance bands running from
+    band A (60,000 calls) to band F (18,000,000 calls) per the published "try before you buy"
+    subscription guide. For the three Gas Enquiry Service APIs — Supply Point Switching,
+    Supply Point Enquiry and Meter Asset Enquiry — the route is not Xoserve at all: applicants
+    contact the Retail Energy Code Company at enquiries@recmanager.co.uk and are administered
+    through the REC Portal (https://recportal.co.uk/), including an annual GES password reset
+    process. Registration for the wider Xoserve data services (UK Link, Gemini, GES, DDP, CMS,
+    CIX, SwitchStream) is by email to customerlifecycle.spa@xoserve.com followed by portal
+    credentials; none of those portals are self-serve.
+  gated: true
+  portal_confirmed: true
+  portal_note: >-
+    https://discoveryapiportal.correla.com/ is a real developer portal, not a customer login
+    wall — the catalogue, product descriptions and specification exports are all reachable
+    anonymously. Only key issuance is gated. Xoserve's own domain has no developer surface:
+    developer., developers., api., docs. and data..xoserve.com all fail to resolve, and
+    /developers, /api, /docs, /data, /openapi.json, /swagger.json and /api-docs on
+    www.xoserve.com all return 404.
+
+auth:
+  model: API key (Azure API Management subscription key)
+  detail: >-
+    Each API declares two apiKey security schemes and nothing else: an `APIKey` request header
+    and a `subscription-key` query parameter. The portal's API metadata reports empty
+    oAuth2AuthenticationSettings and empty openidAuthenticationSettings for all four APIs — no
+    OAuth 2.0, no OpenID Connect, no mTLS, no consumer-consent grant of any kind.
+    https://www.xoserve.com/.well-known/openid-configuration and
+    https://discoveryapiportal.correla.com/.well-known/openid-configuration both returned 404.
+    Transport is HTTPS only (protocols: ["https"]). APIs are segment-versioned
+    (versioningScheme "Segment" on all three version sets), which is why the working base URLs
+    carry an explicit /v1 or /v2 path element even though the exported OpenAPI `servers` entry
+    omits it; the segment form was confirmed live by the 401 responses.
+
+apis_confirmed:
+- id: shipper
+  name: Shipper
+  product: Supply Point Quantities
+  version: v1
+  operation: GET / (getShipper_1)
+  baseURL: https://discoveryapi.correla.com/shipper/v1
+  query_parameters: [mprn, postcode, house_no, street, town, county, country, sub_building_name, dependent_street, dependent_local]
+  response_media_types: [application/json, application/xml]
+  probe: 401 missing subscription key (2026-07-27)
+- id: supplier
+  name: Supplier
+  product: Supply Point Enquiry
+  version: v1
+  operation: GET / (getSupplier_1)
+  baseURL: https://discoveryapi.correla.com/supplier/v1
+  query_parameters: [address_id, mprn, postcode, house_no, street, Town, county, country, sub_building_name, dependent_street, dependent_local]
+  probe: 401 missing subscription key (2026-07-27)
+- id: meter-asset
+  name: Meter Asset
+  product: Meter Asset Enquiry
+  version: v1
+  operation: GET / (getMeterAsset_1)
+  baseURL: https://discoveryapi.correla.com/meter-asset/v1
+  query_parameters: [mprn, msn]
+  probe: 401 missing subscription key (2026-07-27)
+- id: meter-asset-v2
+  name: Meter Asset
+  product: Meter Asset Enquiry
+  version: v2
+  operation: GET / (getMeterAsset_1)
+  baseURL: https://discoveryapi.correla.com/meter-asset/v2
+  query_parameters: [mprn, msn]
+  note: Xoserve states v2 "contains additional output fields when compared to v1".
+  probe: 401 missing subscription key (2026-07-27)
+
+apis_named_but_not_verifiable:
+- name: Supply Point Switching API
+  note: >-
+    Named on the Xoserve Gas APIs page as part of the Gas Enquiry Service and administered by
+    RECCo, with documentation behind the REC Portal login
+    (https://recportal.co.uk/c/portal/login?p_l_id=61546). It does not appear in the anonymous
+    Discovery API Platform catalogue and no specification could be retrieved. Not listed in
+    apis.yml.
+- name: Address API / Switch Gas API
+  note: >-
+    The Discovery API Platform home page describes a Supply Point Switching Service bundling
+    an "Address API" and a "Switch Gas API". Neither appears in the anonymous /developer/apis
+    catalogue (which returned exactly four entries with $top=100), so both are presumed
+    restricted to subscribed groups. Not listed in apis.yml.
+
+harvest:
+  openapi_harvested: true
+  specs_count: 4
+  source_pattern: >-
+    Azure API Management developer-portal export. GET
+    https://discoveryapiportal.correla.com/developer/apis/{apiId}?api-version=2022-04-01-preview&export=true&format=openapi-link
+    returns a short-lived Azure Blob SAS link to the provider's own generated OpenAPI YAML.
+    Portal management endpoint declared publicly at
+    https://discoveryapiportal.correla.com/config.json (managementApiUrl service name
+    "xoapi-prod", managementApiVersion 2022-04-01-preview).
+  caveat: >-
+    IMPORTANT — the exported documents are saved verbatim and each carries `paths: {}`. That
+    is not a harvest failure and not an omission on our part: Azure API Management strips
+    operation detail from the export for unauthenticated callers. The operations themselves
+    are real and were retrieved separately from the same portal
+    (/developer/apis/{apiId}/operations and /operations/{operationId}); their methods, URL
+    templates, query parameters and response examples are recorded under apis_confirmed above
+    rather than being written into the specs, so that nothing is invented inside a
+    provider-published artifact.
+  files:
+  - path: openapi/xoserve-shipper-api-openapi.yml
+    source: https://discoveryapiportal.correla.com/developer/apis/shipper?api-version=2022-04-01-preview&export=true&format=openapi-link
+    fetched: '2026-07-27'
+    http_status: 200
+    parses: true
+  - path: openapi/xoserve-supplier-api-openapi.yml
+    source: https://discoveryapiportal.correla.com/developer/apis/supplier?api-version=2022-04-01-preview&export=true&format=openapi-link
+    fetched: '2026-07-27'
+    http_status: 200
+    parses: true
+  - path: openapi/xoserve-meter-asset-api-v1-openapi.yml
+    source: https://discoveryapiportal.correla.com/developer/apis/meter-asset?api-version=2022-04-01-preview&export=true&format=openapi-link
+    fetched: '2026-07-27'
+    http_status: 200
+    parses: true
+  - path: openapi/xoserve-meter-asset-api-v2-openapi.yml
+    source: https://discoveryapiportal.correla.com/developer/apis/meter-asset-v2?api-version=2022-04-01-preview&export=true&format=openapi-link
+    fetched: '2026-07-27'
+    http_status: 200
+    parses: true
+
+probes:
+- url: https://www.xoserve.com/
+  status: 200
+- url: https://xoserve.com/
+  status: 200
+- url: https://developer.xoserve.com/
+  status: 000
+  note: does not resolve
+- url: https://developers.xoserve.com/
+  status: 000
+  note: does not resolve
+- url: https://api.xoserve.com/
+  status: 000
+  note: does not resolve
+- url: https://docs.xoserve.com/
+  status: 000
+  note: does not resolve
+- url: https://data.xoserve.com/
+  status: 000
+  note: does not resolve
+- url: https://www.xoserve.com/developers
+  status: 404
+- url: https://www.xoserve.com/api
+  status: 404
+- url: https://www.xoserve.com/docs
+  status: 404
+- url: https://www.xoserve.com/data
+  status: 404
+- url: https://www.xoserve.com/openapi.json
+  status: 404
+- url: https://www.xoserve.com/swagger.json
+  status: 404
+- url: https://www.xoserve.com/api-docs
+  status: 404
+- url: https://www.xoserve.com/.well-known/openid-configuration
+  status: 404
+- url: https://www.xoserve.com/sitemap.xml
+  status: 404
+- url: https://www.xoserve.com/.well-known/security.txt
+  status: 404
+- url: https://www.xoserve.com/rss
+  status: 404
+- url: https://www.xoserve.com/news/rss
+  status: 404
+- url: https://www.xoserve.com/products-services/data-products/gas-apis/
+  status: 200
+  note: canonical public listing of the four gas API services
+- url: https://www.xoserve.com/products-services/data-products/gas-enquiry-service-ges/
+  status: 200
+- url: https://www.xoserve.com/products-services/data-products/data-discovery-platform-ddp/
+  status: 200
+  note: DDP is a dashboard/visualisation product for DSC customers, no API
+- url: https://www.xoserve.com/products-services/data-products/access-to-our-data-services/
+  status: 200
+  note: registration is by email to the Customer Life Cycle team; every portal is login-only
+- url: https://www.xoserve.com/products-services/market-participant-data/market-domain-data-mdd/
+  status: 200
+  note: MDD participant list published publicly as XLSX download, not as an API
+- url: https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
+  status: 200
+  note: API subscription guide and call-allowance bands
+- url: https://discoveryapiportal.correla.com/
+  status: 200
+  note: Discovery API Developer Portal, "Powered by Correla"
+- url: https://discoveryapiportal.correla.com/apis
+  status: 200
+- url: https://discoveryapiportal.correla.com/products
+  status: 200
+- url: https://discoveryapiportal.correla.com/config.json
+  status: 200
+- url: https://discoveryapiportal.correla.com/developer/apis?api-version=2022-04-01-preview
+  status: 200
+  note: 4 APIs returned anonymously
+- url: https://discoveryapiportal.correla.com/developer/products?api-version=2022-04-01-preview
+  status: 200
+  note: 3 products, all subscriptionRequired and approvalRequired
+- url: https://discoveryapiportal.correla.com/.well-known/openid-configuration
+  status: 404
+- url: https://discoveryapi.correla.com/
+  status: 404
+  note: live APIM gateway, JSON "Resource not found"
+- url: https://discoveryapi.correla.com/shipper/v1
+  status: 401
+- url: https://discoveryapi.correla.com/supplier/v1
+  status: 401
+- url: https://discoveryapi.correla.com/meter-asset/v1
+  status: 401
+- url: https://discoveryapi.correla.com/meter-asset/v2
+  status: 401
+- url: https://discovery.correla.com/
+  status: 200
+  note: redirects to /login — Data Discovery Platform, customer login only
+- url: https://www.findmysupplier.energy/
+  status: 200
+  note: free public consumer lookup operated by Xoserve Limited
+- url: https://www.findmysupplier.energy/env.js
+  status: 200
+  note: client config exposing undocumented gateway routes; not treated as a public API
+- url: https://correla.com/
+  status: 200
+
+sources:
+- url: https://www.xoserve.com/about-us/about-xoserve/our-role-and-customers/
+  type: Documentation
+  note: >-
+    "Central Data Services Provider (CDSP)"; "We're funded, governed and owned by the gas
+    industry"; operates under the Data Services Contract (DSC) and the Uniform Network Code
+    (UNC); runs UK Link and Gemini.
+- url: https://www.xoserve.com/products-services/data-products/gas-apis/
+  type: Documentation
+  note: >-
+    Names four API services — Supply Point Quantities (Gas Shippers only, via Xoserve Customer
+    Life Cycle team), Supply Point Switching, Supply Point Enquiry and Meter Asset Enquiry (all
+    three via RECCo) — and links the Discovery API Portal technical specification.
+- url: https://discoveryapiportal.correla.com/
+  type: Portal
+  note: '"Welcome to The Discovery API Platform ... We provide industry-leading Gas APIs."'
+- url: https://www.findmysupplier.energy/
+  type: Website
+  note: 'Terms state: "Xoserve Limited (\"Xoserve\" or \"we\") operates the findmysupplier service."'
+
+actions:
+  apisYmlCreated: true
+  apisListed: 4
+  openapiHarvested: 4
+  fabricated: none
+  reason: >-
+    Only artifacts fetched directly from Xoserve/Correla surfaces were saved. Operation-level
+    detail is recorded as review evidence rather than injected into the provider's own OpenAPI
+    exports. Undocumented gateway routes observed in the findmysupplier client config were
+    excluded from apis.yml and the embedded browser key was not reproduced.

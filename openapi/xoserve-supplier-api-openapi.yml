@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+  title: Supplier
+  description: 'The purpose of this API is to expose detailed Supply Meter Point information, enabling subscribers to filter the data by MPRN, Address ID and Address details.'
+  version: v1
+servers:
+  - url: https://discoveryapi.correla.com/supplier
+paths: { }
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: APIKey
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - { }
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

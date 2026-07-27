@@ -1,0 +1,169 @@
+aid: xoserve
+url: https://raw.githubusercontent.com/api-evangelist/xoserve/refs/heads/main/apis.yml
+name: Xoserve
+kind: company
+description: >-
+  Xoserve Limited is the Central Data Services Provider (CDSP) for Great Britain's gas
+  market — funded, governed and owned by the gas industry itself. From Solihull it operates
+  the central register of every gas supply point in Britain and runs the systems the market
+  clears through: UK Link, the Gemini transmission system, the Gas Enquiry Service, the
+  Contact Management Service, SwitchStream and the Data Discovery Platform. It sits between
+  the gas transporters, the independent gas transporters, the shippers and the retail
+  suppliers under the Uniform Network Code (UNC) and the Data Services Contract (DSC), with
+  further obligations under the Retail Energy Code. Britain mandated this data
+  infrastructure, not a consumer data right: there is no CDR-style, consent-driven data
+  portability obligation on Xoserve, and no Green Button or Consumer Data Standards
+  implementation. Its API posture reflects that split exactly. Xoserve does publish a real
+  developer portal — the Discovery API Platform, delivered by its service provider Correla
+  at discoveryapiportal.correla.com — where four documented REST APIs (Shipper, Supplier,
+  Meter Asset v1 and v2) expose meter-point-level information including proposed Formula
+  Year Annual Quantity values, current supplier, network and meter asset detail. Anyone may
+  browse that catalogue and export the OpenAPI documents anonymously, but nobody can call
+  the gateway without being an eligible licensed GB gas industry party: every product
+  requires a subscription AND approval, keys are issued only after a contract is
+  countersigned, and the gateway returns 401 for everyone else. Consumer usage data is
+  therefore reachable through a documented API, but only by accredited industry, never by a
+  consumer or an agent acting on their behalf. On the other side, Xoserve publishes no open
+  machine-readable market-data API at all — its public outputs are the free findmysupplier
+  consumer lookup it operates and the Market Domain Data participant list as a spreadsheet
+  download.
+image: https://www.xoserve.com/assets/images/Favicons/favicon-96x96.png
+tags:
+- Energy
+- United Kingdom
+- Gas
+- Utilities
+- Energy Markets
+- Meter Data
+- Gas Networks
+- Central Data Service Provider
+- Data Services
+created: '2026-07-27'
+modified: '2026-07-27'
+specificationVersion: '0.19'
+apis:
+- aid: xoserve:xoserve-shipper-api
+  name: Xoserve Shipper API
+  description: >-
+    Bundled by Xoserve as the Supply Point Quantities service. Lets gas Shippers view the
+    proposed Formula Year (Billing) Annual Quantity value for a meter point ahead of the
+    late-March notification to the current Shipper, together with meter point and network
+    information. A single GET operation filtered by MPRN, or by postcode combined with
+    optional address detail (house_no, street, town, county, country, sub_building_name,
+    dependent_street, dependent_local). Returns JSON or XML. Available to Gas Shippers only,
+    after contract countersigning.
+  humanURL: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
+  baseURL: https://discoveryapi.correla.com/shipper/v1
+  tags:
+  - Gas
+  - Supply Point
+  - Annual Quantity
+  - Energy Markets
+  properties:
+  - type: OpenAPI
+    url: openapi/xoserve-shipper-api-openapi.yml
+  - type: APIReference
+    url: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
+  - type: Documentation
+    url: https://www.xoserve.com/products-services/data-products/gas-apis/
+  - type: Portal
+    url: https://discoveryapiportal.correla.com/
+  - type: SignUp
+    url: https://discoveryapiportal.correla.com/signin
+  - type: Pricing
+    url: https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
+- aid: xoserve:xoserve-supplier-api
+  name: Xoserve Supplier API
+  description: >-
+    Bundled by Xoserve as the Supply Point Enquiry service, part of the Gas Enquiry Service
+    (GES). Exposes detailed supply meter point information, filtered by MPRN, address_id or
+    postcode combined with optional address detail. Aimed at organisations working to improve
+    change-of-supply and data assurance processes. Access is arranged through the Retail
+    Energy Code Company (RECCo), not directly with Xoserve.
+  humanURL: https://discoveryapiportal.correla.com/api-details#api=supplier&operation=getSupplier_1
+  baseURL: https://discoveryapi.correla.com/supplier/v1
+  tags:
+  - Gas
+  - Supply Point
+  - Switching
+  - Retail Energy Code
+  properties:
+  - type: OpenAPI
+    url: openapi/xoserve-supplier-api-openapi.yml
+  - type: APIReference
+    url: https://discoveryapiportal.correla.com/api-details#api=supplier&operation=getSupplier_1
+  - type: Documentation
+    url: https://www.xoserve.com/products-services/data-products/gas-apis/
+  - type: Documentation
+    url: https://www.xoserve.com/products-services/data-products/gas-enquiry-service-ges/
+  - type: Portal
+    url: https://discoveryapiportal.correla.com/
+  - type: SignUp
+    url: https://discoveryapiportal.correla.com/signin
+- aid: xoserve:xoserve-meter-asset-api-v1
+  name: Xoserve Meter Asset API v1
+  description: >-
+    Bundled by Xoserve as the Meter Asset Enquiry service. Exposes detailed meter asset
+    information for GB gas meter points, filtered by MPRN and/or MSN (meter serial number).
+    Intended for organisations improving data assurance processes. Access is arranged
+    through the Retail Energy Code Company (RECCo).
+  humanURL: https://discoveryapiportal.correla.com/api-details#api=meter-asset&operation=getMeterAsset_1
+  baseURL: https://discoveryapi.correla.com/meter-asset/v1
+  tags:
+  - Gas
+  - Meter Asset
+  - Data Assurance
+  properties:
+  - type: OpenAPI
+    url: openapi/xoserve-meter-asset-api-v1-openapi.yml
+  - type: APIReference
+    url: https://discoveryapiportal.correla.com/api-details#api=meter-asset&operation=getMeterAsset_1
+  - type: Documentation
+    url: https://www.xoserve.com/products-services/data-products/gas-apis/
+  - type: Portal
+    url: https://discoveryapiportal.correla.com/
+- aid: xoserve:xoserve-meter-asset-api-v2
+  name: Xoserve Meter Asset API v2
+  description: >-
+    Version 2 of the Meter Asset Enquiry API, described by Xoserve as containing additional
+    output fields compared with v1. Same MPRN and MSN filters, same segment-versioned
+    gateway path. This is the version bundled into the current Meter Asset Enquiry product.
+  humanURL: https://discoveryapiportal.correla.com/api-details#api=meter-asset-v2&operation=getMeterAsset_1
+  baseURL: https://discoveryapi.correla.com/meter-asset/v2
+  tags:
+  - Gas
+  - Meter Asset
+  - Data Assurance
+  properties:
+  - type: OpenAPI
+    url: openapi/xoserve-meter-asset-api-v2-openapi.yml
+  - type: APIReference
+    url: https://discoveryapiportal.correla.com/api-details#api=meter-asset-v2&operation=getMeterAsset_1
+  - type: Documentation
+    url: https://www.xoserve.com/products-services/data-products/gas-apis/
+  - type: Portal
+    url: https://discoveryapiportal.correla.com/
+common:
+- type: Website
+  url: https://www.xoserve.com/
+- type: Portal
+  url: https://discoveryapiportal.correla.com/
+- type: Documentation
+  url: https://www.xoserve.com/products-services/data-products/gas-apis/
+- type: SignUp
+  url: https://discoveryapiportal.correla.com/signin
+- type: Pricing
+  url: https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
+- type: Blog
+  url: https://www.xoserve.com/news/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/xoserve/
+- type: Support
+  url: https://www.xoserve.com/help-and-support/
+- type: TermsOfService
+  url: https://www.xoserve.com/terms-and-conditions/
+- type: PrivacyPolicy
+  url: https://www.xoserve.com/privacy-notice/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

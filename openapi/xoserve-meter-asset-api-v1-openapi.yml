@@ -1,0 +1,22 @@
+openapi: 3.0.1
+info:
+  title: Meter Asset
+  description: 'The purpose of this API is to expose detailed Meter Asset information, enabling subscribers to filter the data by MSN and MPRN details'
+  version: v1
+servers:
+  - url: https://discoveryapi.correla.com/meter-asset
+paths: { }
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: APIKey
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - { }
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]
