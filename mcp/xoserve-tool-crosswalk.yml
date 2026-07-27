@@ -1,0 +1,77 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  mcp/xoserve-mcp.yml (candidate tool set) bound to the operationIds Xoserve publishes through the
+  Discovery API Platform portal API
+  (https://discoveryapiportal.correla.com/developer/apis/{api}/operations, HTTP 200, 2026-07-27).
+description: >-
+  Binds each candidate MCP tool to its backing REST operation so the tool inherits a real input
+  contract instead of a guessed one. Xoserve's surface is unusually clean: it is REST-only, every
+  operation is a single GET on the API root path, and coverage is 1:1 in both directions — there are
+  no MCP-only and no REST-only capabilities. Note the operationId `getMeterAsset_1` is reused across
+  the v1 and v2 Meter Asset APIs, which are distinct APIM APIs sharing one version set
+  (60265ed9901b2cabf37091e6, segment versioning); the crosswalk disambiguates them by spec file.
+surfaces:
+  openapi:
+    files:
+      - openapi/xoserve-shipper-api-openapi.yml
+      - openapi/xoserve-supplier-api-openapi.yml
+      - openapi/xoserve-meter-asset-api-v1-openapi.yml
+      - openapi/xoserve-meter-asset-api-v2-openapi.yml
+    note: >-
+      The provider's anonymous Azure APIM export carries `paths: {}` — operation and schema detail
+      is stripped for unauthenticated callers. The real operations, parameters, response schemas and
+      examples were retrieved separately from the same portal and are captured in overlays/,
+      json-schema/ and examples/. Bind tools against the overlays for a complete input schema.
+    gated: partial
+  graphql:
+    endpoint: null
+    note: Xoserve publishes no GraphQL surface.
+  mcp:
+    url: null
+    gated: n/a
+    note: No MCP server exists. The tool set in mcp/xoserve-mcp.yml is a derived candidate.
+crosswalk:
+  - tool: get_supply_point_quantities
+    category: supply-point-quantities
+    rest: [getShipper_1]
+    spec: openapi/xoserve-shipper-api-openapi.yml
+    binding: rest
+    confidence: high
+    note: >-
+      1:1. Input schema = the 10 query parameters published for getShipper_1 (mprn, or postcode plus
+      optional address detail); output = ShipperRestResponse / ShipperResponse (24 fields).
+  - tool: get_supply_point_enquiry
+    category: supply-point-enquiry
+    rest: [getSupplier_1]
+    spec: openapi/xoserve-supplier-api-openapi.yml
+    binding: rest
+    confidence: high
+    note: >-
+      1:1. Input schema = the 11 query parameters published for getSupplier_1 (address_id, mprn, or
+      postcode plus optional address detail — note the provider spells one parameter `Town` with a
+      capital T on this API only); output = SupplierRestResponse / SupplierFull (89 fields).
+  - tool: get_meter_asset_v1
+    category: meter-asset-enquiry
+    rest: [getMeterAsset_1]
+    spec: openapi/xoserve-meter-asset-api-v1-openapi.yml
+    binding: rest
+    confidence: high
+    note: 1:1. Input = mprn, msn; output = MeterAssetRestResponse / MeterAsset (16 fields).
+  - tool: get_meter_asset_v2
+    category: meter-asset-enquiry
+    rest: [getMeterAsset_1]
+    spec: openapi/xoserve-meter-asset-api-v2-openapi.yml
+    binding: rest
+    confidence: high
+    note: >-
+      1:1 against the v2 API. Same operationId as v1 but a different APIM API and a different schema
+      document; output = MeterAsset (42 fields).
+mcp_only: []
+rest_only: []
+coverage:
+  tools_named: 4
+  tools_bound: 4
+  mcp_only: 0
+  rest_operations_total: 4
+  rest_operations_with_tool: 4

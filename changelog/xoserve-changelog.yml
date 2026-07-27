@@ -1,0 +1,60 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.xoserve.com/change/uk-link-releases/
+scheme: scheduled-release-programme
+current_version: null
+description: >-
+  Xoserve publishes no API-level changelog — there is no per-endpoint release note, no dated entry
+  list for the four gas APIs, and no changelog page on the Discovery API Platform portal. What it does
+  publish is the UK Link release programme: a dated schedule of major releases against the central
+  systems the APIs read from, split into "Major releases — significant changes to functionality" and
+  "Minor releases — smaller enhancements", with ad-hoc changes delivered outside both on DSC customer
+  request. Changes are governed through the Change Management Committee and tracked in the customer
+  change register. This is the closest thing to a changelog that exists, captured verbatim.
+governance:
+  committee: Change Management Committee
+  change_register: https://www.xoserve.com/change/customer-change-register/
+  change_packs: https://www.xoserve.com/change/change-packs/
+  submit_proposal: https://www.xoserve.com/change/submit-a-change-proposal/
+  historical_releases_contact: uklink@xoserve.com
+entries:
+  - version: February 2026 release
+    date: '2026-02-27'
+    status: upcoming
+    type: major
+    highlights: Scheduled UK Link major release — significant changes to functionality.
+  - version: June 2026 release
+    date: '2026-06-26'
+    status: upcoming
+    type: major
+    highlights: Scheduled UK Link major release.
+  - version: November 2026 release
+    date: '2026-11-06'
+    status: upcoming
+    type: major
+    highlights: Scheduled UK Link major release.
+  - version: June 2025 release
+    date: '2025-06-27'
+    status: implemented
+    type: major
+  - version: February 2025 release
+    date: '2025-02-28'
+    status: implemented
+    type: major
+  - version: November 2024 release
+    date: '2024-11-08'
+    status: implemented
+    type: major
+  - version: June 2024 release
+    date: '2024-06-27'
+    status: implemented
+    type: major
+caveat: >-
+  Release dates are captured verbatim from the provider's schedule page as read on 2026-07-27; the
+  page itself warns that "any amendments to upcoming Major Release dates will be communicated via the
+  Change Management Committee." No release is mapped to a specific API change because Xoserve does
+  not publish that mapping. Breaking-vs-additive classification is deliberately omitted rather than
+  guessed.
+related:
+  - {name: Gemini changes overview, url: 'https://www.xoserve.com/products-services/data-products/gemini-system/gemini-changes-overview/'}
+  - {name: Digitalisation strategy, url: 'https://www.xoserve.com/about-us/digitalisation-strategy/'}

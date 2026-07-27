@@ -1,0 +1,28 @@
+{
+  "mprn": {
+    "mprn": "string",
+    "country": "string",
+    "county": "string",
+    "postcode": "string",
+    "street": "string",
+    "town": "string",
+    "installation_number": "string",
+    "amr_indicator": "string",
+    "csep_id": "string",
+    "current_aq_roll_value": 0,
+    "current_formula_year_soq_value": 0,
+    "current_formula_year_aq_value": 0,
+    "current_soq_roll_value": 0,
+    "dependent_local": "string",
+    "dependent_street": "string",
+    "distribution_network_operator": "string",
+    "exit_zone": "string",
+    "house_no": "string",
+    "local_distribution_zone": "string",
+    "market_sector_code": "string",
+    "perspective_formula_year_aq_value": 0,
+    "perspective_formula_year_soq_value": 0,
+    "perspective_formula_year_effective_date": "string",
+    "sub_building_name": "string"
+  }
+}

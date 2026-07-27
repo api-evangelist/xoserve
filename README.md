@@ -44,7 +44,7 @@ Bundled by Xoserve as the Supply Point Quantities service. Lets gas Shippers vie
 - [Documentation](https://www.xoserve.com/products-services/data-products/gas-apis/)
 - [Portal](https://discoveryapiportal.correla.com/)
 - [Sign Up](https://discoveryapiportal.correla.com/signin)
-- [Pricing](https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf)
+- [Pricing](https://www.xoserve.com/products-services/data-products/gas-apis/)
 
 ### Xoserve Supplier API
 
@@ -115,12 +115,44 @@ Version 2 of the Meter Asset Enquiry API, described by Xoserve as containing add
 - [Portal](https://discoveryapiportal.correla.com/)
 - [Documentation](https://www.xoserve.com/products-services/data-products/gas-apis/)
 - [Sign Up](https://discoveryapiportal.correla.com/signin)
-- [Pricing](https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf)
+- [Pricing](https://www.xoserve.com/products-services/data-products/gas-apis/)
 - [Blog](https://www.xoserve.com/news/)
 - [LinkedIn](https://www.linkedin.com/company/xoserve/)
 - [Support](https://www.xoserve.com/help-and-support/)
 - [Terms of Service](https://www.xoserve.com/terms-and-conditions/)
 - [Privacy Policy](https://www.xoserve.com/privacy-notice/)
+- [Getting Started — Try Before You Buy subscription guide (PDF)](https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf)
+- [Status — Planned outages](https://www.xoserve.com/news-updates/news-and-updates/planned-outages/) and [Live updates](https://www.xoserve.com/live-updates/)
+- [Change Log — UK Link releases](https://www.xoserve.com/change/uk-link-releases/)
+- [Compliance — accreditations (ISO/IEC 27001:2022, ISO 9001:2015)](https://www.xoserve.com/about-us/)
+
+## Enrichment Artifacts
+
+Harvested or derived on 2026-07-27. The headline find of this round: Azure API Management strips
+`paths` and `components` from the anonymous OpenAPI export, but the **operation detail and component
+schemas are separately retrievable** from the same portal at `/developer/apis/{api}/operations/{op}`
+and `/developer/apis/{api}/schemas/{schemaId}`. Those provider-published documents are saved verbatim
+to `json-schema/` and `examples/`, and reconstituted into complete operations via `overlays/` — the
+harvested `openapi/` exports are left untouched.
+
+- [json-schema/](json-schema) — provider-published component schemas (ShipperResponse 24 fields, SupplierFull 89, MeterAsset 16 in v1 / 42 in v2)
+- [examples/](examples) — provider-published response examples, one per API
+- [overlays/](overlays) — OpenAPI Overlay 1.0.0 per spec: real operation, parameters, responses, schemas, and the corrected version-segmented `servers` URL
+- [authentication/](authentication) — Azure APIM subscription key model, access routes, live `WWW-Authenticate` challenge
+- [conventions/](conventions) — read-only estate, mandatory query filters, JSON/XML, no pagination, no idempotency key needed (all GETs)
+- [errors/](errors) — Azure APIM `{statusCode, message}` envelope (not RFC 9457), 401/404 captured live
+- [lifecycle/](lifecycle) — segment versioning, concurrent Meter Asset v1/v2, release programme, status surfaces, maintenance windows
+- [changelog/](changelog) — the UK Link major release schedule (there is no API-level changelog)
+- [plans/](plans) and [rate-limits/](rate-limits) — the published annual call-allowance bands A–F (60,000 to 18,000,000 calls/year)
+- [sandbox/](sandbox) — the "Try Before You Buy" trial on a separate SAP BTP launchpad, against a privately issued dummy dataset
+- [conformance/](conformance) — standards conformance plus the published ISO 27001:2022 / ISO 9001:2015 certifications
+- [data-model/](data-model) — the MPRN-centred entity graph reconstructed from the component schemas
+- [security/](security) — TLS/HSTS/DNSSEC/CAA/SPF/DMARC probe results
+- [skills/](skills) — three packaged Agent Skills grounded in the real operationIds
+- [agentic-access/](agentic-access) — `x-agentic-access` contracts (all read/connected, but subject + purpose + audit required)
+- [mcp/](mcp) — a **derived candidate** tool set and REST crosswalk; Xoserve operates no MCP server
+- [llms/](llms) — generated `llms.txt` (Xoserve publishes none)
+- [well-known/](well-known) and [packages/](packages) — recorded negative results: no `/.well-known/` surface on any host, no first-party SDKs, no GitHub organization
 
 ## Mandate and Access Posture
 

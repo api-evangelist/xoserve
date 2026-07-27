@@ -62,6 +62,17 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/xoserve-shipper-api-openapi.yml
+  - type: Overlay
+    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
+    url: overlays/xoserve-shipper-api-overlay.yaml
+  - type: JSONSchema
+    name: Provider-published component schemas
+    url: json-schema/xoserve-shipper-api-components.json
+  - type: Examples
+    name: Provider-published response example
+    url: examples/xoserve-shipper-api-response-example.json
+  - type: AgentSkill
+    url: skills/xoserve-lookup-supply-point-quantities.md
   - type: APIReference
     url: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
   - type: Documentation
@@ -90,6 +101,17 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/xoserve-supplier-api-openapi.yml
+  - type: Overlay
+    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
+    url: overlays/xoserve-supplier-api-overlay.yaml
+  - type: JSONSchema
+    name: Provider-published component schemas
+    url: json-schema/xoserve-supplier-api-components.json
+  - type: Examples
+    name: Provider-published response example
+    url: examples/xoserve-supplier-api-response-example.json
+  - type: AgentSkill
+    url: skills/xoserve-resolve-supply-point-from-address.md
   - type: APIReference
     url: https://discoveryapiportal.correla.com/api-details#api=supplier&operation=getSupplier_1
   - type: Documentation
@@ -116,6 +138,15 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/xoserve-meter-asset-api-v1-openapi.yml
+  - type: Overlay
+    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
+    url: overlays/xoserve-meter-asset-api-v1-overlay.yaml
+  - type: JSONSchema
+    name: Provider-published component schemas
+    url: json-schema/xoserve-meter-asset-api-v1-components.json
+  - type: Examples
+    name: Provider-published response example
+    url: examples/xoserve-meter-asset-api-v1-response-example.json
   - type: APIReference
     url: https://discoveryapiportal.correla.com/api-details#api=meter-asset&operation=getMeterAsset_1
   - type: Documentation
@@ -137,6 +168,17 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/xoserve-meter-asset-api-v2-openapi.yml
+  - type: Overlay
+    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
+    url: overlays/xoserve-meter-asset-api-v2-overlay.yaml
+  - type: JSONSchema
+    name: Provider-published component schemas
+    url: json-schema/xoserve-meter-asset-api-v2-components.json
+  - type: Examples
+    name: Provider-published response example
+    url: examples/xoserve-meter-asset-api-v2-response-example.json
+  - type: AgentSkill
+    url: skills/xoserve-enquire-meter-asset.md
   - type: APIReference
     url: https://discoveryapiportal.correla.com/api-details#api=meter-asset-v2&operation=getMeterAsset_1
   - type: Documentation
@@ -144,15 +186,24 @@ apis:
   - type: Portal
     url: https://discoveryapiportal.correla.com/
 common:
+- type: DomainSecurity
+  url: security/xoserve-domain-security.yml
+- type: Authentication
+  url: authentication/xoserve-authentication.yml
 - type: Website
   url: https://www.xoserve.com/
 - type: Portal
   url: https://discoveryapiportal.correla.com/
 - type: Documentation
   url: https://www.xoserve.com/products-services/data-products/gas-apis/
+- type: APIReference
+  name: Discovery API Platform catalogue
+  url: https://discoveryapiportal.correla.com/apis
 - type: SignUp
   url: https://discoveryapiportal.correla.com/signin
 - type: Pricing
+  url: https://www.xoserve.com/products-services/data-products/gas-apis/
+- type: GettingStarted
   url: https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
 - type: Blog
   url: https://www.xoserve.com/news/
@@ -160,10 +211,54 @@ common:
   url: https://www.linkedin.com/company/xoserve/
 - type: Support
   url: https://www.xoserve.com/help-and-support/
+- type: HelpCenter
+  url: https://www.xoserve.com/help-and-support/raise-a-new-support-request/
 - type: TermsOfService
   url: https://www.xoserve.com/terms-and-conditions/
 - type: PrivacyPolicy
   url: https://www.xoserve.com/privacy-notice/
+- type: Compliance
+  url: https://www.xoserve.com/about-us/
+- type: StatusPage
+  url: https://www.xoserve.com/news-updates/news-and-updates/planned-outages/
+- type: ChangeLog
+  url: https://www.xoserve.com/change/uk-link-releases/
+- type: ChangeLog
+  name: Xoserve UK Link release programme (structured)
+  url: changelog/xoserve-changelog.yml
+- type: Lifecycle
+  url: lifecycle/xoserve-lifecycle.yml
+- type: Conventions
+  url: conventions/xoserve-conventions.yml
+- type: Conformance
+  url: conformance/xoserve-conformance.yml
+- type: ErrorCatalog
+  url: errors/xoserve-problem-types.yml
+- type: DataModel
+  url: data-model/xoserve-data-model.yml
+- type: Sandbox
+  url: sandbox/xoserve-sandbox.yml
+- type: Plans
+  url: plans/xoserve-plans.yml
+- type: RateLimits
+  url: rate-limits/xoserve-rate-limits.yml
+- type: MCPServer
+  name: Xoserve MCP server (derived candidate — no official server exists)
+  url: mcp/xoserve-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/xoserve-tool-crosswalk.yml
+- type: AgenticAccess
+  url: agentic-access/xoserve-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/xoserve-llms.txt
+- type: TechnicalSpecification
+  name: Supply Point Quantities API Technical Specification
+  url: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
+- type: Website
+  name: findmysupplier — free consumer gas supplier lookup operated by Xoserve
+  url: https://www.findmysupplier.energy/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

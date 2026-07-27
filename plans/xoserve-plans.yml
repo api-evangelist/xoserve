@@ -1,0 +1,84 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Xoserve
+providerId: xoserve
+generated: '2026-07-27'
+method: searched
+created: '2026-07-27'
+modified: '2026-07-27'
+tags:
+  - Gas
+  - Energy
+  - United Kingdom
+  - Meter Data
+description: >-
+  Xoserve does not publish per-plan prices. Pricing for the Supply Point Quantities API is set by an
+  annual allowance of API calls ("hits") categorised into bands A to F, and the provider states
+  explicitly that "the pricing of these bands will be detailed in your contract" — the band ceilings
+  are public, the money is not. The three Gas Enquiry Service APIs are not priced by Xoserve at all:
+  they are charged under the REC Charging Statement administered by the Retail Energy Code Company.
+  Every plan is gated on regulated eligibility, not on payment: all three portal Products carry both
+  subscriptionRequired=true and approvalRequired=true.
+sources:
+  - https://www.xoserve.com/products-services/data-products/gas-apis/
+  - https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
+  - https://discoveryapiportal.correla.com/developer/products?api-version=2022-04-01-preview
+  - https://recportal.co.uk/category-3-products
+plans:
+  - id: xoserve-try-before-you-buy
+    name: Try Before You Buy (TBYB)
+    type: trial
+    description: >-
+      Pre-purchase trial of the gas API service against a small dummy dataset, on a separate SAP BTP
+      launchpad. Access granted by Xoserve; not self-serve.
+    price: not published
+    entries: []
+  - id: xoserve-supply-point-quantities
+    name: Supply Point Quantities
+    type: contract
+    description: >-
+      Direct-from-Xoserve API service for the Shipper API. Eligibility restricted to gas Shippers.
+      Apply via the Customer Life Cycle team; access details issued after the contract is
+      countersigned. Priced by annual call-allowance band A–F, with the band price set in the contract.
+    apply: xoserve.customer.lifecycle.team@xoserve.co.uk
+    apis: [xoserve:xoserve-shipper-api]
+    subscription_required: true
+    approval_required: true
+    price: not published (band pricing set in contract)
+    entries:
+      - {label: 'Band A', name: band_a, type: metered, metric: api_calls, limit: 60000, timeFrame: year}
+      - {label: 'Band B', name: band_b, type: metered, metric: api_calls, limit: 600000, timeFrame: year}
+      - {label: 'Band C', name: band_c, type: metered, metric: api_calls, limit: 3600000, timeFrame: year}
+      - {label: 'Band D', name: band_d, type: metered, metric: api_calls, limit: 7200000, timeFrame: year}
+      - {label: 'Band E', name: band_e, type: metered, metric: api_calls, limit: 12000000, timeFrame: year}
+      - {label: 'Band F', name: band_f, type: metered, metric: api_calls, limit: 18000000, timeFrame: year}
+  - id: xoserve-supply-point-enquiry
+    name: Supply Point Enquiry
+    type: contract
+    description: >-
+      Gas Enquiry Service product covering the Supplier API. Provided under the Retail Energy Code and
+      governed by RECCo; eligibility subject to the REC Data Access Matrix. Charges are in the REC
+      Charging Statement, not set by Xoserve.
+    apply: enquiries@recmanager.co.uk
+    apis: [xoserve:xoserve-supplier-api]
+    subscription_required: true
+    approval_required: true
+    price: per REC Charging Statement
+    entries: []
+  - id: xoserve-meter-asset-enquiry
+    name: Meter Asset Enquiry
+    type: contract
+    description: >-
+      Gas Enquiry Service product covering the Meter Asset APIs (v1 and v2). Provided under the Retail
+      Energy Code and governed by RECCo. Charges are in the REC Charging Statement.
+    apply: enquiries@recmanager.co.uk
+    apis: [xoserve:xoserve-meter-asset-api-v1, xoserve:xoserve-meter-asset-api-v2]
+    subscription_required: true
+    approval_required: true
+    price: per REC Charging Statement
+    entries: []
+notes: >-
+  Only figures Xoserve actually publishes are recorded. The band allowances are transcribed verbatim
+  from the "How much does the Supply Point Quantities API cost?" table on the Gas APIs page. No price
+  per band, no currency amount and no free tier is asserted, because none is published.

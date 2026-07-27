@@ -1,0 +1,38 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Live probes of the /.well-known/ discovery surface on every host in apis.yml — the corporate
+  website, the Discovery API Platform developer portal and the live Azure API Management gateway.
+result: none
+summary: >-
+  Xoserve publishes no /.well-known/ discovery surface on any host. Nothing was found: no RFC 9116
+  security.txt, no OpenID Connect or RFC 8414 metadata (consistent with the portal reporting empty
+  oAuth2AuthenticationSettings and openidAuthenticationSettings for all four APIs), no RFC 9727
+  api-catalog and no ai-plugin.json. Every probe below returned 404. Recorded as an audit trail of
+  a genuine negative result — no WellKnown or SecurityTxt pointer is wired in apis.yml because
+  there is nothing to point at.
+hosts:
+  - host: https://www.xoserve.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /security.txt, status: 404}
+  - host: https://discoveryapiportal.correla.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+  - host: https://discoveryapi.correla.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+  - host: https://correla.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+notes: >-
+  The gateway does advertise its auth scheme in a standards-based way at the HTTP layer rather than
+  via /.well-known/ — an unauthenticated call returns
+  `WWW-Authenticate: AzureApiManagementKey realm="https://discoveryapi.correla.com/<api>",name="APIKey",type="header"`
+  alongside HTTP 401. That challenge header is captured in conventions/xoserve-conventions.yml and
+  errors/xoserve-problem-types.yml.

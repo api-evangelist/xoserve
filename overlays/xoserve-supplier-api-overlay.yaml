@@ -1,0 +1,577 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Xoserve Supplier v1
+  version: 1.0.0
+extends: openapi/xoserve-supplier-api-openapi.yml
+x-apievangelist:
+  generated: '2026-07-27'
+  method: searched
+  source: https://discoveryapiportal.correla.com/developer/apis/supplier/operations/getSupplier_1?api-version=2022-04-01-preview
+    (operation detail, HTTP 200) and https://discoveryapiportal.correla.com/developer/apis/supplier/schemas/632d7e184117c812f02682c1?api-version=2022-04-01-preview
+    (components schema document, HTTP 200); 401/404 response shapes captured from live probes of https://discoveryapi.correla.com/
+    on 2026-07-27
+  rationale: 'Azure API Management strips paths and components from the anonymous OpenAPI export, so the harvested
+    openapi/ file carries `paths: {}`. Every element added by this overlay was retrieved verbatim from Xoserve/Correla''s
+    own developer-portal API — nothing is invented. Applying the overlay reconstitutes the operation the provider
+    publishes.'
+actions:
+- target: $.servers
+  update:
+  - url: https://discoveryapi.correla.com/supplier/v1
+    description: Live gateway, segment-versioned (v1). Confirmed 401 (subscription key required) on 2026-07-27.
+- target: $.paths
+  update:
+    /:
+      get:
+        operationId: getSupplier_1
+        summary: Supplier
+        description: There are 3 different filters that could be applied to the API call, where at least 1 is mandatory.
+          These are mprn, address_id or postcode, the latter could be combined with additional address detail
+        tags:
+        - Supplier
+        parameters:
+        - name: address_id
+          in: query
+          required: false
+          description: Format - int64. Format - int64. Internal (BDP) ID that links MPRN to address data
+          schema:
+            type: integer
+        - name: mprn
+          in: query
+          required: false
+          description: Format - int64. Format - int64. Meter Point Reference Number (MRPN). A unique identifier
+            for the point at which a meter is, has been or will be connected to the Gas Network
+          schema:
+            type: integer
+        - name: postcode
+          in: query
+          required: false
+          description: Postcode
+          schema:
+            type: string
+        - name: house_no
+          in: query
+          required: false
+          description: House Number
+          schema:
+            type: string
+        - name: street
+          in: query
+          required: false
+          description: Street
+          schema:
+            type: string
+        - name: Town
+          in: query
+          required: false
+          description: Town
+          schema:
+            type: string
+        - name: county
+          in: query
+          required: false
+          description: County
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: false
+          description: Country
+          schema:
+            type: string
+        - name: sub_building_name
+          in: query
+          required: false
+          description: Sub Building Name
+          schema:
+            type: string
+        - name: dependent_street
+          in: query
+          required: false
+          description: Dependent Street
+          schema:
+            type: string
+        - name: dependent_local
+          in: query
+          required: false
+          description: Dependent Locality
+          schema:
+            type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SupplierRestResponse'
+                example:
+                  supplier:
+                    mprn: string
+                    street: string
+                    town: string
+                    postcode: string
+                    county: string
+                    country: string
+                    uprn: string
+                    incoming_supplier: string
+                    supply_point_withdrawal_status: string
+                    network_owner_effective_from_date: string
+                    sms_operating_entity_efd: string
+                    dcc_service_flag_efd: string
+                    first_smets_installation_date: string
+                    ihd_install_status: string
+                    amr_indicator: string
+                    igt_transportation_charge_rate: string
+                    igt_transportation_charge_rate_type: string
+                    igt_charging_methodology: string
+                    csep_supply_point_offtake_quantity: string
+                    previous_supplier_name: string
+                    previous_supplier_short_code: string
+                    priority_consumers_indicator: string
+                    csep_max_annual_quantity: string
+                    original_supply_meter_point_annual_quantity: string
+                    house_name: string
+                    house_no: string
+                    po_box_no: string
+                    sub_building_name: string
+                    dependent_street: string
+                    dependent_local: string
+                    double_dependent_local: string
+                    delivery_point_alias: string
+                    csep_id: string
+                    meter_imperial_indicator: string
+                    meter_device_status: string
+                    latest_meter_read_date: string
+                    amr_sp: string
+                    dcc_service_flag: string
+                    interruption_contract_exists: string
+                    installing_supplier_id: string
+                    isolation_status: string
+                    mam_short_code: string
+                    meter_number_of_dials: 0
+                    supply_meter_point_shq: string
+                    address_id: string
+                    class: string
+                    current_supplier: string
+                    current_supplier_name: string
+                    network_name: string
+                    twin_stream_site_indicator: string
+                    ldz_id: string
+                    market_sector_code: string
+                    meter_capacity: string
+                    meter_mechanism: string
+                    meter_point_status: string
+                    annual_quantity: string
+                    msn: string
+                    formula_year_annual_quantity: string
+                    smso_id: string
+                    meter_type: string
+                    latest_meter_read_type: string
+                    latest_meter_read_value: string
+                    formula_year_offtake_quantity: string
+                    shipper_name: string
+                    shipper_short_code: string
+                    end_user_category_code: string
+                    confirmation_reference_number: string
+                    confirmation_effective_date: string
+                    meter_read_batch_frequency: string
+                    supply_meter_point_current_year_minimum_annual_quantity: string
+                    meter_manufacturer: string
+                    meter_installation_date: string
+                    meter_units: string
+                    meter_location: string
+                    correction_factor: string
+                    gas_act_owner: string
+                    meter_asset_manager_effective_date: string
+                    meter_model: string
+                    meter_year_of_manufacture: string
+                    meter_link_code: string
+                    end_user_category_identifier: string
+                    exit_zone: string
+                    smp_prospective_formula_year_soq: string
+                    smp_prospective_formula_year_aq: string
+                    smp_prospective_formula_year_effective_date: string
+                    small_large_supply_point_indicator: string
+                    daily_metered_indicator: string
+                    convertor_indicator: string
+                    offtake_quantity: string
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/SupplierFull'
+                example: <supplier> <mprn>string</mprn> <street>string</street> <town>string</town> <postcode>string</postcode>
+                  <county>string</county> <country>string</country> <uprn>string</uprn> <incoming_supplier>string</incoming_supplier>
+                  <supply_point_withdrawal_status>string</supply_point_withdrawal_status> <network_owner_effective_from_date>string</network_owner_effective_from_date>
+                  <sms_operating_entity_efd>string</sms_operating_entity_efd> <dcc_service_flag_efd>string</dcc_service_flag_efd>
+                  <first_smets_installation_date>string</first_smets_installation_date> <ihd_install_status>string</ihd_install_status>
+                  <amr_indicator>string</amr_indicator> <igt_transportation_charge_rate>string</igt_transportation_charge_rate>
+                  <igt_transportation_charge_rate_type>string</igt_transportation_charge_rate_type> <igt_charging_methodology>string</igt_charging_methodology>
+                  <csep_supply_point_offtake_quantity>string</csep_supply_point_offtake_quantity> <previous_supplier_name>string</previous_supplier_name>
+                  <previous_supplier_short_code>string</previous_supplier_short_code> <priority_consumers_indicator>string</priority_consumers_indicator>
+                  <csep_max_annual_quantity>string</csep_max_annual_quantity> <original_supply_meter_point_annual_quantity>string</original_supply_meter_point_annual_quantity>
+                  <house_name>string</house_name> <house_no>string</house_no> <po_box_no>string</po_box_no> <sub_building_name>string</sub_building_name>
+                  <dependent_street>string</dependent_street> <dependent_local>string</dependent_local> <double_dependent_local>string</double_dependent_local>
+                  <delivery_point_alias>string</delivery_point_alias> <csep_id>string</csep_id> <meter_imperial_indicator>string</meter_imperial_indicator>
+                  <meter_device_status>string</meter_device_status> <latest_meter_read_date>string</latest_meter_read_date>
+                  <amr_sp>string</amr_sp> <dcc_service_flag>string</dcc_service_flag> <interruption_contract_exists>string</interruption_contract_exists>
+                  <installing_supplier_id>string</installing_supplier_id> <isolation_status>string</isolation_status>
+                  <mam_short_code>string</mam_short_code> <meter_number_of_dials>0</meter_number_of_dials> <supply_meter_point_shq>string</supply_meter_point_shq>
+                  <address_id>string</address_id> <class>string</class> <current_supplier>string</current_supplier>
+                  <current_supplier_name>string</current_supplier_name> <network_name>string</network_name> <twin_stream_site_indicator>string</twin_stream_site_indicator>
+                  <ldz_id>string</ldz_id> <market_sector_code>string</market_sector_code> <meter_capacity>string</meter_capacity>
+                  <meter_mechanism>string</meter_mechanism> <meter_point_status>string</meter_point_status> <annual_quantity>string</annual_quantity>
+                  <msn>string</msn> <formula_year_annual_quantity>string</formula_year_annual_quantity> <smso_id>string</smso_id>
+                  <meter_type>string</meter_type> <latest_meter_read_type>string</latest_meter_read_type> <latest_meter_read_value>string</latest_meter_read_value>
+                  <formula_year_offtake_quantity>string</formula_year_offtake_quantity> <shipper_name>string</shipper_name>
+                  <shipper_short_code>string</shipper_short_code> <end_user_category_code>string</end_user_category_code>
+                  <confirmation_reference_number>string</confirmation_reference_number> <confirmation_effective_date>string</confirmation_effective_date>
+                  <meter_read_batch_frequency>string</meter_read_batch_frequency> <supply_meter_point_current_year_minimum_annual_quantity>string</supply_meter_point_current_year_minimum_annual_quantity>
+                  <meter_manufacturer>string</meter_manufacturer> <meter_installation_date>string</meter_installation_date>
+                  <meter_units>string</meter_units> <meter_location>string</meter_location> <correction_factor>string</correction_factor>
+                  <gas_act_owner>string</gas_act_owner> <meter_asset_manager_effective_date>string</meter_asset_manager_effective_date>
+                  <meter_model>string</meter_model> <meter_year_of_manufacture>string</meter_year_of_manufacture>
+                  <meter_link_code>string</meter_link_code> <end_user_category_identifier>string</end_user_category_identifier>
+                  <exit_zone>string</exit_zone> <smp_prospective_formula_year_soq>string</smp_prospective_formula_year_soq>
+                  <smp_prospective_formula_year_aq>string</smp_prospective_formula_year_aq> <smp_prospective_formula_year_effective_date>string</smp_prospective_formula_year_effective_date>
+                  <small_large_supply_point_indicator>string</small_large_supply_point_indicator> <daily_metered_indicator>string</daily_metered_indicator>
+                  <convertor_indicator>string</convertor_indicator> <offtake_quantity>string</offtake_quantity>
+                  </supplier>
+          '401':
+            description: Access denied — missing or invalid Azure API Management subscription key.
+            content:
+              application/json:
+                example:
+                  statusCode: 401
+                  message: Access denied due to missing subscription key. Make sure to include subscription key
+                    when making requests to an API.
+          '404':
+            description: Resource not found.
+            content:
+              application/json:
+                example:
+                  statusCode: 404
+                  message: Resource not found
+- target: $.components.schemas
+  update:
+    SupplierFull:
+      type: object
+      properties:
+        mprn:
+          type: string
+          description: Meter Point Reference Number (MRPN).  A unique identifier for the point at which a meter
+            is, has been or will be connected to the Gas Network
+        street:
+          type: string
+          description: Street
+        town:
+          type: string
+          description: Town
+        postcode:
+          type: string
+          description: Postcode
+        county:
+          type: string
+          description: County
+        country:
+          type: string
+          description: Country
+        uprn:
+          type: string
+          description: Unique identifier for every addressable location in Great Britain
+        incoming_supplier:
+          type: string
+          description: A unique three character code used to identify the Incoming Supplier
+        supply_point_withdrawal_status:
+          type: string
+          description: Identifies if the site is not registered to a Shipper or the current Shipper has withdrawn
+        network_owner_effective_from_date:
+          type: string
+          description: Date the network owner is effective from for a supply meter point
+        sms_operating_entity_efd:
+          type: string
+          description: The date on which the Smart Meter System Operator (SMSO) becomes effective
+        dcc_service_flag_efd:
+          type: string
+          description: The first inclusive calendar date for which the status of Data Communications Company (DCC)
+            Service Flag applies
+        first_smets_installation_date:
+          type: string
+          description: First Smart Metering Equipment Technical Specifications (SMETS) Installation Date
+        ihd_install_status:
+          type: string
+          description: Information from the Supplier regarding the status/existence of the In Home Display (IHD)
+            at a supply point
+        amr_indicator:
+          type: string
+          description: Automated Meter Reading (AMR) Indicator
+        igt_transportation_charge_rate:
+          type: string
+          description: The monetary rate that is applicable to the Supply Meter Point for IGT transportation charges
+        igt_transportation_charge_rate_type:
+          type: string
+          description: Indicator showing the type of IGT Transportation Charge Rate being applied
+        igt_charging_methodology:
+          type: string
+          description: The IGT charging methodology that is applied to the Supply Point
+        csep_supply_point_offtake_quantity:
+          type: string
+          description: The daily offtake (SOQ) of gas (measured in kWh) of all Supply Points associated with the
+            CSEP’s connection to the upstream network, calculated from the EUC AQ and DM SOQ information
+        previous_supplier_name:
+          type: string
+          description: Name of the last previous Supplier assigned to the Supply Point
+        previous_supplier_short_code:
+          type: string
+          description: Specifies the 3 digit unique Supplier Short Code for the previous Supplier
+        priority_consumers_indicator:
+          type: string
+          description: The category of priority consumer at the Supply Meter Point
+        csep_max_annual_quantity:
+          type: string
+          description: The total projected maximum annual offtake (AQ) of gas (measured in kWh) of all Supply Meter
+            Points associated with this CSEP’s connection to the upstream network
+        original_supply_meter_point_annual_quantity:
+          type: string
+          description: The initial estimated Annual Quantity for the Supply Meter Point
+        house_name:
+          type: string
+          description: House Name
+        house_no:
+          type: string
+          description: House Number
+        po_box_no:
+          type: string
+          description: PO Box Number
+        sub_building_name:
+          type: string
+          description: Sub Building Name
+        dependent_street:
+          type: string
+          description: Dependent Street
+        dependent_local:
+          type: string
+          description: Dependent Locality
+        double_dependent_local:
+          type: string
+          description: Double Dependent Locality
+        delivery_point_alias:
+          type: string
+          description: Delivery Point Alias
+        csep_id:
+          type: string
+          description: The unique identifier for the Connected System Exit Point (CSEP)
+        meter_imperial_indicator:
+          type: string
+          description: Indicator identifying if the meter measures volume of gas consumed in metric or imperial
+            units
+        meter_device_status:
+          type: string
+          description: A code indicating the current status of the meter installed at the supply point
+        latest_meter_read_date:
+          type: string
+          description: Latest Meter Read Date
+        amr_sp:
+          type: string
+          description: A unique three character code used to identify the Automated Meter Reading (AMR) Service
+            Provider
+        dcc_service_flag:
+          type: string
+          description: Data Communications Company (DCC) Service Flag
+        interruption_contract_exists:
+          type: string
+          description: Indicator to identify whether an Interruption Contract Exists on the supply meter point
+        installing_supplier_id:
+          type: string
+          description: A unique three character code used to identify the Supplier responsible for the first SMETS
+            Meter Installation at the supply point
+        isolation_status:
+          type: string
+          description: Isolation Status
+        mam_short_code:
+          type: string
+          description: A unique three character code used to identify the Meter Asset Manager (MAM)
+        meter_number_of_dials:
+          type: integer
+          description: Number of dials or digits on the meter which are considered during meter reading
+          format: int32
+        supply_meter_point_shq:
+          type: string
+          description: Current Supply Meter Point SHQ (Standard Hourly Offtake Quantity)
+        address_id:
+          type: string
+          description: Unique (Internal BDP) identifier for the address
+        class:
+          type: string
+          description: 'Denotes the current class type for the Supply Meter Point. VALUES: 1 - Class 1, 2 - Class
+            2, 3 - Class 3, 4 - Class 4'
+        current_supplier:
+          type: string
+          description: A unique three character code used to identify the current supplier
+        current_supplier_name:
+          type: string
+          description: Name of the current Supplier for the supply meter point
+        network_name:
+          type: string
+          description: Gas Distribution Network Name
+        twin_stream_site_indicator:
+          type: string
+          description: Indicates if the supply meter point is currently a twin stream site
+        ldz_id:
+          type: string
+          description: Unique reference code for the Local Distribution Zone (LDZ)
+        market_sector_code:
+          type: string
+          description: A code that specifies that the site is used for domestic or industrial and commercial purposes
+        meter_capacity:
+          type: string
+          description: The amount of gas that can be passed through the meter in a given time period. This is the
+            manufacturer's maximum value
+        meter_mechanism:
+          type: string
+          description: The coded value of the description of the Meter Mechanism
+        meter_point_status:
+          type: string
+          description: The current status of the operability of the supply meter point
+        annual_quantity:
+          type: string
+          description: The current annual offtake quantity (AQ) of a Supply Meter Point. Value in kWh.
+        msn:
+          type: string
+          description: The manufacturer's meter serial number as held on the physical meter currently installed
+            on the supply point
+        formula_year_annual_quantity:
+          type: string
+          description: The supply meter point AQ that is fixed throughout the formula year for determination of
+            Transportation rates. Value in kWh
+        smso_id:
+          type: string
+          description: The identity of the operator, a Supplier has procured data and communication services from,
+            in respect of a Smart Metering System
+        meter_type:
+          type: string
+          description: "The type of meter installed at the supply point. \nR = Rotary; T = Turbine; D = Diaphragm\
+            \ of unknown material; L = Leather Diaphragm; S = Synthetic Diaphragm; U = Ultrasonic;Z= Unknown; O\
+            \ = Orifice"
+        latest_meter_read_type:
+          type: string
+          description: Latest Meter Read Type
+        latest_meter_read_value:
+          type: string
+          description: Latest Meter Read Value
+        formula_year_offtake_quantity:
+          type: string
+          description: The current value for SOQ of the supply point that is fixed throughout the formula year for
+            determination of transportation rates. Value in kWh
+        shipper_name:
+          type: string
+          description: Name of the current Shipper assigned to the Supply Point
+        shipper_short_code:
+          type: string
+          description: Specifies the 3 digit unique Shipper Short Code for the current Shipper
+        end_user_category_code:
+          type: string
+          description: 'Acronym for the makeup of an End User Category (EUC). For example: EA:E1903B'
+        confirmation_reference_number:
+          type: string
+          description: A sequential number that uniquely identifies the Confirmation (only visible where the Supply
+            Point is within the requester's portfolio)
+        confirmation_effective_date:
+          type: string
+          description: Date on which the current Shipper took over responsibility for the Supply Point (only visible
+            where the Supply Point is within the requester's portfolio)
+        meter_read_batch_frequency:
+          type: string
+          description: "The frequency on which reads will be received for class 3 Supply Meter Points. \nVALUES:\
+            \ W-7 days, F –14 days, M –month, 6 –6 monthly. (only visible where the Supply Point is within the requester's\
+            \ portfolio)"
+        supply_meter_point_current_year_minimum_annual_quantity:
+          type: string
+          description: The minimum bookable annual capacity based on the historic maximum annual offtake for a Supply
+            (only visible where the Supply Point is within the requester's portfolio)
+        meter_manufacturer:
+          type: string
+          description: Identifies the Short code of meter manufacturer of the meter installed at theSupply Point
+            (only visible where the Supply Point is within the requester's portfolio)
+        meter_installation_date:
+          type: string
+          description: Date the meter was installed at the SupplyPoint (only visible where the Supply Point is within
+            the requester's portfolio)
+        meter_units:
+          type: string
+          description: This contains the units the meter installed on a Supply Point is reading in e.g. 10, 100,
+            1000 (only visible where the Supply Point is within the requester's portfolio)
+        meter_location:
+          type: string
+          description: "A code representing the location of a meter installed at the Supply Point \nVALUES: 0 -Unknown,\
+            \ 1 -Cellar, 2 -Under Stairs, 3 -Hall, 4 -Kitchen, 5 -Bathroom, 6-Garage, 7 -Canteen, 8 -Cloakroom,\
+            \ 9 -Cupboard, 10 -Domestic, 11 -Front Door, 12 -Hall Cupboard, 13 -Kitchen Cupboard, 14 -Kitchen under\
+            \ the sink, 15 -Landing, 16 -Office, 17 -Office Cupboard, 18 -Outside WC, 19 -Pantry, 20 -Porch, 21\
+            \ -Public Bar, 22 -Rear of Shop, 23 -Saloon Bar, 24 -Shed, 25 -Shop Front, 26 -Shop Window, 27 -Staff\
+            \ Room, 28 -Store Room, 29 -Toilet, 30 -Under Counter, 31 -Waiting Room, 32 -Meterbox, 98 –Other, 99–Outside\
+            \ (only visible where the Supply Point is within the requester's portfolio)"
+        correction_factor:
+          type: string
+          description: This is a fixed factor where no convertor is fitted and the meter reading needs to be corrected
+            for Pressure/Altitude/Temperature. Format:999.999999 (only visible where the Supply Point is within
+            the requester's portfolio)
+        gas_act_owner:
+          type: string
+          description: "Unique code which identifies the role the market participant is acting in. \nValues : T\
+            \ -GAO Transporter , S -GAO Supplier , C -GAO Consumer, U –Unknown."
+        meter_asset_manager_effective_date:
+          type: string
+          description: The date on which Meter Asset Manager (MAM) is effectively responsible for the meter assets
+            at the Supply Point (only visible where the Supply Point is within the requester's portfolio)
+        meter_model:
+          type: string
+          description: The model description of the meter installed at the Supply Point (only visible where the
+            Supply Point is within the requester's portfolio)
+        meter_year_of_manufacture:
+          type: string
+          description: The year in which the meter installed at the Supply Point was manufactured expressed as a
+            century date (e.g. 1981) (only visible where the Supply Point is within the requester's portfolio)ah
+        meter_link_code:
+          type: string
+          description: "A code specifying the functional relationship between meters (the way in which they are\
+            \ linked together) at given locations on an End User's site to be described. \nVALUES: P = Primary Meter,\
+            \ S = Sub-meter, F = Free standing meter"
+        end_user_category_identifier:
+          type: string
+          description: A unique reference for the End User Category assigned to the Supply Point
+        exit_zone:
+          type: string
+          description: Exit Zone code
+        smp_prospective_formula_year_soq:
+          type: string
+          description: Prospective Formula Year SOQ value. ‘Prospective’ is a synonym for ‘Perspective’
+        smp_prospective_formula_year_aq:
+          type: string
+          description: Prospective Formula Year AQ value. ‘Prospective’ is a synonym for ‘Perspective’
+        smp_prospective_formula_year_effective_date:
+          type: string
+          description: Prospective Formula Year effective date. ‘Prospective’ is a synonym for ‘Perspective’
+        small_large_supply_point_indicator:
+          type: string
+          description: Indicator showing if a Supply Point is Large(LSP) or Small (SSP) Annual Quantity threshold
+            of 73,200 kWh
+        daily_metered_indicator:
+          type: string
+          description: "Indicator showing if the Supply Meter Point is Daily Metered \nValues: Daily Metered, Non\
+            \ Daily Metered"
+        convertor_indicator:
+          type: string
+          description: "Indicator for the presence of a Converter Asset. \nValues: Y = Yes, N = NO"
+        offtake_quantity:
+          type: string
+          description: The current value for the peak daily supply offtake quantity (SOQ) of a supply point.Value
+            in kWh
+      xml:
+        name: supplier
+    SupplierRestResponse:
+      type: object
+      properties:
+        supplier:
+          $ref: '#/components/schemas/SupplierFull'
+- target: $.info
+  update:
+    x-apievangelist-rating-source: https://apis.io/provider/xoserve
+    x-access-gate: accredited-only — subscription AND approval required; keys issued after contract countersigning

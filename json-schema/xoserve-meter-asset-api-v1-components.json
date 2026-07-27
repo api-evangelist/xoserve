@@ -1,0 +1,139 @@
+{
+  "components": {
+    "schemas": {
+      "MeterAssetRestResponse": {
+        "type": "object",
+        "properties": {
+          "meter": {
+            "$ref": "#/components/schemas/MeterAsset"
+          }
+        },
+        "xml": {
+          "name": "root"
+        },
+        "example": {
+          "meter": {
+            "mprn": "string",
+            "msn": "string",
+            "current_supplier": "string",
+            "current_supplier_name": "string",
+            "meter_capacity": "string",
+            "meter_mechanism": "string",
+            "meter_type": "string",
+            "meter_model": "string",
+            "meter_year_of_manufacture": "string",
+            "smp_status": "string",
+            "meter_installation_date": "string",
+            "meter_asset_manager_effective_date": "string",
+            "meter_asset_manager_id": "string",
+            "meter_asset_manager_name": "string",
+            "service_effective_valid_from": "string",
+            "map_id": "string"
+          }
+        }
+      },
+      "GetRequest": {
+        "type": "integer",
+        "x-apim-inline": true
+      },
+      "GetRequest-1": {
+        "type": "string",
+        "x-apim-inline": true
+      },
+      "MeterAsset": {
+        "type": "object",
+        "properties": {
+          "mprn": {
+            "type": "string",
+            "description": "Meter Point Reference Number (MRPN). A unique identifier for the point at which a meter is, has been or will be connected to the Gas Network"
+          },
+          "msn": {
+            "type": "string",
+            "description": "The manufacturer's meter serial number as held on the physical meter currently installed on the supply point"
+          },
+          "current_supplier": {
+            "type": "string",
+            "description": "A unique three character code used to identify the current supplier"
+          },
+          "current_supplier_name": {
+            "type": "string",
+            "description": "Name of the current Supplier"
+          },
+          "meter_capacity": {
+            "type": "string",
+            "description": "The amount of gas that can be passed through the meter in a given time period. This is the manufacturer's maximum value"
+          },
+          "meter_mechanism": {
+            "type": "string",
+            "description": "The coded value of the description of the Meter Mechanism"
+          },
+          "meter_type": {
+            "type": "string",
+            "description": "The type of meter installed at the supply point"
+          },
+          "meter_model": {
+            "type": "string",
+            "description": "Model of meter installed at the supply point"
+          },
+          "meter_year_of_manufacture": {
+            "type": "string",
+            "description": "The year of manufacture of the meter installed at the supply point"
+          },
+          "smp_status": {
+            "type": "string",
+            "description": "(Upcoming version) The current status of the operability of the supply meter point"
+          },
+          "meter_installation_date": {
+            "type": "string",
+            "description": "The date of when the meter was installed",
+            "format": "date-time"
+          },
+          "meter_asset_manager_effective_date": {
+            "type": "string",
+            "description": "The date of when the MAM became effective for the Supply Point",
+            "format": "date-time"
+          },
+          "meter_asset_manager_id": {
+            "type": "string",
+            "description": "An identification number for the registered MAM for the Supply Point"
+          },
+          "meter_asset_manager_name": {
+            "type": "string",
+            "description": "The company name of the registered MAM for the Supply Point"
+          },
+          "service_effective_valid_from": {
+            "type": "string",
+            "description": "The date of when the service becomes effective for the Supply Point",
+            "format": "date-time"
+          },
+          "map_id": {
+            "type": "string",
+            "description": "MAP ID"
+          }
+        },
+        "description": "A Meter Asset object",
+        "xml": {
+          "name": "meter"
+        },
+        "example": {
+          "mprn": "string",
+          "msn": "string",
+          "current_supplier": "string",
+          "current_supplier_name": "string",
+          "meter_capacity": "string",
+          "meter_mechanism": "string",
+          "meter_type": "string",
+          "meter_model": "string",
+          "meter_year_of_manufacture": "string",
+          "smp_status": "string",
+          "meter_installation_date": "string",
+          "meter_asset_manager_effective_date": "string",
+          "meter_asset_manager_id": "string",
+          "meter_asset_manager_name": "string",
+          "service_effective_valid_from": "string",
+          "map_id": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  json-schema/xoserve-shipper-api-components.json, json-schema/xoserve-supplier-api-components.json,
+  json-schema/xoserve-meter-asset-api-v1-components.json,
+  json-schema/xoserve-meter-asset-api-v2-components.json — the component-schema documents Xoserve
+  publishes at https://discoveryapiportal.correla.com/developer/apis/{api}/schemas/{schemaId}. Field
+  descriptions quoted below are the provider's own.
+description: >-
+  The entity graph behind the GB gas central register as it surfaces through the four enquiry APIs.
+  Everything hangs off one identifier — the MPRN (Meter Point Reference Number), the unique key for a
+  Supply Meter Point. The APIs do not expose separate resources for supplier, shipper, network or
+  meter-asset-manager: those are denormalised onto the response as short codes and names, so the graph
+  below is reconstructed from id-reference FIELDS rather than from $ref links between resources.
+  There is exactly one $ref in the whole estate (the RestResponse envelopes wrapping their payload).
+primary_key:
+  id: mprn
+  name: Meter Point Reference Number
+  definition_verbatim: >-
+    "A unique identifier for the point at which a meter is, has been or will be connected to the Gas
+    Network"
+  type: string in responses, integer (int64) as a query filter
+secondary_keys:
+  - {id: msn, name: Meter Serial Number, definition: "the manufacturer's meter serial number as held on the physical meter currently installed on the supply point", used_by: [meter-asset]}
+  - {id: address_id, name: Address ID, definition: 'internal (BDP) ID that links MPRN to address data', used_by: [supplier]}
+  - {id: uprn, name: Unique Property Reference Number, definition: 'unique identifier for every addressable location in Great Britain', exposed_by: [supplier]}
+  - {id: csep_id, name: Connected System Exit Point ID, exposed_by: [shipper, supplier]}
+entities:
+  - name: SupplyMeterPoint
+    key: mprn
+    schemas: [ShipperResponse, SupplierFull]
+    field_count: {shipper: 24, supplier: 89}
+    description: >-
+      The gas supply point itself. Carries address, network placement (LDZ, exit zone,
+      distribution_network_operator, network_name), commercial classification (market_sector_code,
+      end_user_category_code, small_large_supply_point_indicator, daily_metered_indicator) and the
+      quantity values the market clears on.
+  - name: Address
+    key: address_id
+    embedded_in: [ShipperResponse, SupplierFull]
+    fields: [house_name, house_no, po_box_no, sub_building_name, street, dependent_street, dependent_local, double_dependent_local, delivery_point_alias, town, county, country, postcode, uprn]
+    description: >-
+      PAF-shaped GB postal address, denormalised onto the supply point. Also the alternate lookup path
+      — a postcode plus optional address detail resolves to an MPRN.
+  - name: Quantity
+    embedded_in: [ShipperResponse, SupplierFull]
+    fields: [current_formula_year_aq_value, current_formula_year_soq_value, current_aq_roll_value, current_soq_roll_value, perspective_formula_year_aq_value, perspective_formula_year_soq_value, perspective_formula_year_effective_date, annual_quantity, formula_year_annual_quantity, formula_year_offtake_quantity, offtake_quantity, original_supply_meter_point_annual_quantity, csep_max_annual_quantity, csep_supply_point_offtake_quantity]
+    description: >-
+      Annual Quantity (AQ) and Supply Offtake Quantity (SOQ) values, current and proposed for the
+      coming Formula Year. This is the payload the Shipper API exists to deliver, ahead of the
+      late-March notification to the current Shipper.
+  - name: MeterAsset
+    key: msn
+    schemas: [MeterAsset]
+    field_count: {v1: 16, v2: 42}
+    description: >-
+      The physical meter installed at a supply point — capacity, mechanism, type, model, year of
+      manufacture, manufacturer, installation and removal dates, imperial indicator, number of dials,
+      device status and smart/DCC service flags.
+  - name: Supplier
+    key: current_supplier (3-character short code)
+    denormalised_as: [current_supplier, current_supplier_name, incoming_supplier, incoming_supplier_short_code, previous_supplier, previous_supplier_name, previous_supplier_short_code, installing_supplier_id]
+    description: >-
+      The retail gas supplier registered at the supply point, plus incoming and previous supplier for
+      switch-in-flight visibility. Identified by "a unique three character code".
+  - name: Shipper
+    key: shipper_short_code
+    denormalised_as: [shipper_name, shipper_short_code, current_shipper, confirmation_reference_number, confirmation_effective_date]
+    description: The gas Shipper holding the supply point, and the confirmation that registered it.
+  - name: Network
+    key: network_short_code
+    denormalised_as: [network_name, network_short_code, network_owner_effective_from_date, distribution_network_operator, local_distribution_zone, ldz_id, exit_zone, gt_reference_number, twin_stream_site_indicator]
+    description: The transporter / IGT network and the zones the supply point sits in.
+  - name: MeterAssetManager
+    key: meter_asset_manager_id / map_id / mam_short_code
+    denormalised_as: [meter_asset_manager_id, meter_asset_manager_name, meter_asset_manager_effective_date, map_id, current_map_effective_from_date, current_map_effective_to_date, previous_map_short_code, previous_map_effective_from_date, previous_map_effective_to_date, incoming_map_short_code, incoming_map_effective_from_date, mam_short_code, previous_mam, previous_mam_short_code, previous_mam_effective_from_date, previous_mam_effective_to_date]
+    description: >-
+      Meter Asset Provider / Manager (MAP / MAM) holding the meter, with full current / previous /
+      incoming history in the v2 Meter Asset schema.
+  - name: SmartMeteringOperator
+    key: smso_id
+    denormalised_as: [smso_id, sms_operating_entity_efd, dcc_service_flag, dcc_service_flag_efd, dcc_service_flag_effective_from_date, first_smets_installation_date, ihd_install_status]
+    description: Smart Meter System Operator and DCC enrolment status for smart-metered points.
+  - name: MeterRead
+    embedded_in: [SupplierFull]
+    fields: [latest_meter_read_date, latest_meter_read_type, latest_meter_read_value, meter_read_batch_frequency]
+    description: The latest read held against the meter — a single latest value, not a read history.
+relationships:
+  - {from: SupplyMeterPoint, to: Address, type: has_one, via: address_id}
+  - {from: SupplyMeterPoint, to: MeterAsset, type: has_one, via: msn, note: 'the meter "currently installed on the supply point"'}
+  - {from: SupplyMeterPoint, to: Quantity, type: has_one, via: embedded}
+  - {from: SupplyMeterPoint, to: Supplier, type: belongs_to, via: current_supplier}
+  - {from: SupplyMeterPoint, to: Supplier, type: has_one, via: incoming_supplier, note: switch in flight}
+  - {from: SupplyMeterPoint, to: Supplier, type: has_one, via: previous_supplier_short_code}
+  - {from: SupplyMeterPoint, to: Shipper, type: belongs_to, via: shipper_short_code}
+  - {from: SupplyMeterPoint, to: Network, type: belongs_to, via: network_short_code}
+  - {from: SupplyMeterPoint, to: Network, type: belongs_to, via: local_distribution_zone}
+  - {from: SupplyMeterPoint, to: SmartMeteringOperator, type: has_one, via: smso_id}
+  - {from: MeterAsset, to: MeterAssetManager, type: belongs_to, via: meter_asset_manager_id}
+  - {from: MeterAsset, to: MeterAssetManager, type: has_many, via: previous_map_short_code, note: 'MAP/MAM history, v2 only'}
+  - {from: MeterAsset, to: Supplier, type: belongs_to, via: current_supplier}
+  - {from: MeterAsset, to: SupplyMeterPoint, type: belongs_to, via: mprn}
+  - {from: SupplyMeterPoint, to: MeterRead, type: has_one, via: latest_meter_read_date, note: 'latest read only; no read series is exposed'}
+envelopes:
+  - {schema: ShipperRestResponse, wraps: ShipperResponse, root_field: mprn, xml_root: root}
+  - {schema: SupplierRestResponse, wraps: SupplierFull, root_field: supplier, xml_root: root}
+  - {schema: MeterAssetRestResponse, wraps: MeterAsset, root_field: meter, xml_root: root}
+version_delta:
+  meter_asset_v1_to_v2:
+    v1_fields: 16
+    v2_fields: 42
+    added: [meter_asset_manufacturer, dcc_service_flag, dcc_service_flag_effective_from_date, removal_date, network_short_code, current_shipper, incoming_supplier, incoming_supplier_short_code, previous_supplier_short_code, previous_supplier, gt_reference_number, current_supplier_effective_date, current_map_effective_from_date, current_map_effective_to_date, previous_map_short_code, previous_map_effective_from_date, previous_map_effective_to_date, incoming_map_short_code, incoming_map_effective_from_date, previous_supplier_effective_from_date, previous_supplier_effective_to_date, incoming_supplier_effective_from_date, previous_mam_short_code, previous_mam, previous_mam_effective_from_date, previous_mam_effective_to_date]
+    theme: >-
+      v2 is v1 plus history and smart-metering status — it turns a point-in-time asset snapshot into a
+      supplier/MAP/MAM change record.
+privacy_note: >-
+  Every record here is keyed to a single identifiable GB premise. MPRN plus postal address plus current
+  supplier plus consumption quantities is personal-data-adjacent under UK GDPR when tied to a domestic
+  property, which is exactly why the gateway is closed to anyone who is not an accredited industry party.

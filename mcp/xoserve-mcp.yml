@@ -1,0 +1,67 @@
+generated: '2026-07-27'
+method: derived
+status: candidate
+source: >-
+  Derived from the four operations Xoserve publishes through the Discovery API Platform
+  (https://discoveryapiportal.correla.com/developer/apis/{api}/operations, HTTP 200, 2026-07-27) and
+  the component schemas at /developer/apis/{api}/schemas/{schemaId}. No official Xoserve or Correla
+  MCP server exists.
+searched:
+  - {target: 'Xoserve Gas APIs page', url: 'https://www.xoserve.com/products-services/data-products/gas-apis/', result: 'no MCP mention'}
+  - {target: 'Discovery API Platform portal', url: 'https://discoveryapiportal.correla.com/', result: 'no MCP mention'}
+  - {target: 'npm', query: 'xoserve / correla', result: '0 packages'}
+  - {target: 'GitHub orgs xoserve / correla', result: 'do not exist'}
+description: >-
+  CANDIDATE, not published. Xoserve operates no MCP server. This manifest is a derived proposal that
+  maps each of the four real, provider-published REST operations onto one MCP tool, so an agent
+  builder has a grounded starting point. Every tool below names a source_operation that exists
+  verbatim in the provider's own portal metadata; nothing is invented. Any real deployment inherits
+  Xoserve's access gate — the tools are only callable by a party holding an approved Azure API
+  Management subscription key, which is issued to licensed GB gas Shippers (Supply Point Quantities)
+  or to REC parties via the Retail Energy Code Company (Gas Enquiry Service).
+server:
+  name: xoserve
+  transport: http
+  url: null
+  auth: apiKey
+  auth_detail: >-
+    APIKey request header (or subscription-key query parameter) against
+    https://discoveryapi.correla.com. See authentication/xoserve-authentication.yml.
+tools:
+  - name: get_supply_point_quantities
+    description: >-
+      Look up a GB gas meter point's current and proposed Formula Year Annual Quantity (AQ) and
+      Supply Offtake Quantity (SOQ) values plus network attributes, by MPRN or by postcode with
+      optional address detail. Gas Shippers only.
+    source_operation: openapi/xoserve-shipper-api-openapi.yml#getShipper_1
+    input_schema_source: overlays/xoserve-shipper-api-overlay.yaml
+    parameters: [mprn, postcode, house_no, street, town, county, country, sub_building_name, dependent_street, dependent_local]
+    read_only: true
+  - name: get_supply_point_enquiry
+    description: >-
+      Retrieve detailed supply meter point information for a GB gas supply point by MPRN, address_id,
+      or postcode with optional address detail. Access administered by RECCo under the Retail Energy Code.
+    source_operation: openapi/xoserve-supplier-api-openapi.yml#getSupplier_1
+    input_schema_source: overlays/xoserve-supplier-api-overlay.yaml
+    parameters: [address_id, mprn, postcode, house_no, street, Town, county, country, sub_building_name, dependent_street, dependent_local]
+    read_only: true
+  - name: get_meter_asset_v1
+    description: Retrieve meter asset detail for a GB gas meter point by MPRN and/or meter serial number (MSN).
+    source_operation: openapi/xoserve-meter-asset-api-v1-openapi.yml#getMeterAsset_1
+    input_schema_source: overlays/xoserve-meter-asset-api-v1-overlay.yaml
+    parameters: [mprn, msn]
+    read_only: true
+  - name: get_meter_asset_v2
+    description: >-
+      Retrieve meter asset detail with the extended v2 field set (42 fields vs 16 in v1 — adds DCC
+      service flags, network short code, and current/previous/incoming supplier, shipper and MAP/MAM
+      history), by MPRN and/or MSN.
+    source_operation: openapi/xoserve-meter-asset-api-v2-openapi.yml#getMeterAsset_1
+    input_schema_source: overlays/xoserve-meter-asset-api-v2-overlay.yaml
+    parameters: [mprn, msn]
+    read_only: true
+notes: >-
+  All four tools are read-only GETs over regulated GB gas market data about identifiable premises.
+  Any MCP deployment should carry the agentic-access contracts in
+  agentic-access/xoserve-agentic-access.yml and honour the annual call-allowance bands in
+  rate-limits/xoserve-rate-limits.yml.

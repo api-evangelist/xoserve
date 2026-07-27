@@ -1,0 +1,543 @@
+{
+  "components": {
+    "schemas": {
+      "MeterAssetRestResponse": {
+        "type": "object",
+        "properties": {
+          "meter": {
+            "$ref": "#/components/schemas/MeterAsset"
+          }
+        },
+        "xml": {
+          "name": "root"
+        },
+        "example": {
+          "meter": {
+            "mprn": "string",
+            "msn": "string",
+            "current_supplier": "string",
+            "current_supplier_name": "string",
+            "meter_capacity": "string",
+            "meter_mechanism": "string",
+            "meter_type": "string",
+            "meter_model": "string",
+            "meter_year_of_manufacture": "string",
+            "smp_status": "string",
+            "meter_installation_date": "string",
+            "meter_asset_manager_effective_date": "string",
+            "meter_asset_manager_id": "string",
+            "meter_asset_manager_name": "string",
+            "service_effective_valid_from": "string",
+            "map_id": "string",
+            "meter_asset_manufacturer": "string",
+            "dcc_service_flag": "string",
+            "dcc_service_flag_effective_from_date": "string",
+            "removal_date": "string",
+            "network_short_code": "string",
+            "current_shipper": "string",
+            "incoming_supplier": "string",
+            "incoming_supplier_short_code": "string",
+            "previous_supplier_short_code": "string",
+            "previous_supplier": "string",
+            "gt_reference_number": "string",
+            "current_supplier_effective_date": "string",
+            "current_map_effective_from_date": "string",
+            "current_map_effective_to_date": "string",
+            "previous_map_short_code": "string",
+            "previous_map_effective_from_date": "string",
+            "previous_map_effective_to_date": "string",
+            "incoming_map_short_code": "string",
+            "incoming_map_effective_from_date": "string",
+            "previous_supplier_effective_from_date": "string",
+            "previous_supplier_effective_to_date": "string",
+            "incoming_supplier_effective_from_date": "string",
+            "previous_mam_short_code": "string",
+            "previous_mam": "string",
+            "previous_mam_effective_from_date": "string",
+            "previous_mam_effective_to_date": "string"
+          }
+        }
+      },
+      "GetRequest": {
+        "type": "integer",
+        "x-apim-inline": true
+      },
+      "GetRequest-1": {
+        "type": "string",
+        "x-apim-inline": true
+      },
+      "v2": {
+        "type": "object",
+        "properties": {
+          "mprn": {
+            "type": "string",
+            "description": "Meter Point Reference Number (MRPN). A unique identifier for the point at which a meter is, has been or will be connected to the Gas Network"
+          },
+          "msn": {
+            "type": "string",
+            "description": "The manufacturer's meter serial number as held on the physical meter currently installed on the supply point"
+          },
+          "current_supplier": {
+            "type": "string",
+            "description": "A unique three character code used to identify the current supplier"
+          },
+          "current_supplier_name": {
+            "type": "string",
+            "description": "Name of the current Supplier"
+          },
+          "meter_capacity": {
+            "type": "string",
+            "description": "The amount of gas that can be passed through the meter in a given time period. This is the manufacturer's maximum value"
+          },
+          "meter_mechanism": {
+            "type": "string",
+            "description": "The coded value of the description of the Meter Mechanism"
+          },
+          "meter_type": {
+            "type": "string",
+            "description": "The type of meter installed at the supply point"
+          },
+          "meter_model": {
+            "type": "string",
+            "description": "Model of meter installed at the supply point"
+          },
+          "meter_year_of_manufacture": {
+            "type": "string",
+            "description": "The year of manufacture of the meter installed at the supply point"
+          },
+          "smp_status": {
+            "type": "string",
+            "description": "The current status of the operability of the supply meter point"
+          },
+          "meter_installation_date": {
+            "type": "string",
+            "description": "The date of when the meter was installed",
+            "format": "date-time"
+          },
+          "meter_asset_manager_effective_date": {
+            "type": "string",
+            "description": "The date of when the MAM became effective for the Supply Point",
+            "format": "date-time"
+          },
+          "meter_asset_manager_id": {
+            "type": "string",
+            "description": "An identification number for the registered MAM for the Supply Point"
+          },
+          "meter_asset_manager_name": {
+            "type": "string",
+            "description": "The company name of the registered MAM for the Supply Point"
+          },
+          "service_effective_valid_from": {
+            "type": "string",
+            "description": "The date of when the service becomes effective for the Supply Point",
+            "format": "date-time"
+          },
+          "map_id": {
+            "type": "string",
+            "description": "MAP ID"
+          },
+          "meter_asset_manufacturer": {
+            "type": "string",
+            "description": "Manufacturer of the supply point meter"
+          },
+          "dcc_service_flag": {
+            "type": "string",
+            "description": "Data Communications Company (DCC) Service Flag"
+          },
+          "dcc_service_flag_effective_from_date": {
+            "type": "string",
+            "description": "The first inclusive calendar date for which the status of Data Communications Company (DCC) Service Flag applies"
+          },
+          "removal_date": {
+            "type": "string",
+            "description": "Date of meter point removal",
+            "format": "date-time"
+          },
+          "network_short_code": {
+            "type": "string",
+            "description": "Gas distribution network short code"
+          },
+          "current_shipper": {
+            "type": "string",
+            "description": "Name of the current Shipper assigned to the Supply Point"
+          },
+          "incoming_supplier": {
+            "type": "string",
+            "description": "Name of the Incoming Supplier"
+          },
+          "incoming_supplier_short_code": {
+            "type": "string",
+            "description": "A unique three character code used to identify the Incoming Supplier"
+          },
+          "previous_supplier_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 digit unique Supplier Short Code for the previous Supplier"
+          },
+          "previous_supplier": {
+            "type": "string",
+            "description": "Name of the last previous Supplier assigned to the Supply Point"
+          },
+          "gt_reference_number": {
+            "type": "string",
+            "description": "Gas Transporter reference number"
+          },
+          "current_supplier_effective_date": {
+            "type": "string",
+            "description": "Date on which the current Supplier took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "current_map_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the current MAP took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "current_map_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the current MAP ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_map_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 character, unique short code for the previous MAP"
+          },
+          "previous_map_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the previous MAP took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_map_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the previous MAP ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "incoming_map_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 character, unique short code for the incoming MAP"
+          },
+          "incoming_map_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the incoming MAP takes over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_supplier_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the previous Supplier took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_supplier_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the previous Supplier ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "incoming_supplier_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the incoming Supplier takes over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_mam_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 character, unique short code for the previous MAM"
+          },
+          "previous_mam": {
+            "type": "string",
+            "description": "Name of previous MAM"
+          },
+          "previous_mam_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the previous MAM took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_mam_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the previous MAM ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          }
+        },
+        "description": "A Meter Asset object",
+        "xml": {
+          "name": "meter"
+        },
+        "example": {
+          "mprn": "string",
+          "msn": "string",
+          "current_supplier": "string",
+          "current_supplier_name": "string",
+          "meter_capacity": "string",
+          "meter_mechanism": "string",
+          "meter_type": "string",
+          "meter_model": "string",
+          "meter_year_of_manufacture": "string",
+          "smp_status": "string",
+          "meter_installation_date": "string",
+          "meter_asset_manager_effective_date": "string",
+          "meter_asset_manager_id": "string",
+          "meter_asset_manager_name": "string",
+          "service_effective_valid_from": "string",
+          "map_id": "string",
+          "meter_asset_manufacturer": "string",
+          "dcc_service_flag": "string",
+          "dcc_service_flag_effective_from_date": "string",
+          "removal_date": "string",
+          "network_short_code": "string",
+          "current_shipper": "string",
+          "incoming_supplier": "string",
+          "incoming_supplier_short_code": "string",
+          "previous_supplier_short_code": "string",
+          "previous_supplier": "string",
+          "gt_reference_number": "string",
+          "current_supplier_effective_date": "string",
+          "current_map_effective_from_date": "string",
+          "current_map_effective_to_date": "string",
+          "previous_map_short_code": "string",
+          "previous_map_effective_from_date": "string",
+          "previous_map_effective_to_date": "string",
+          "incoming_map_short_code": "string",
+          "incoming_map_effective_from_date": "string",
+          "previous_supplier_effective_from_date": "string",
+          "previous_supplier_effective_to_date": "string",
+          "incoming_supplier_effective_from_date": "string",
+          "previous_mam_short_code": "string",
+          "previous_mam": "string",
+          "previous_mam_effective_from_date": "string",
+          "previous_mam_effective_to_date": "string"
+        }
+      },
+      "MeterAsset": {
+        "type": "object",
+        "properties": {
+          "mprn": {
+            "type": "string",
+            "description": "Meter Point Reference Number (MRPN). A unique identifier for the point at which a meter is, has been or will be connected to the Gas Network"
+          },
+          "msn": {
+            "type": "string",
+            "description": "The manufacturer's meter serial number as held on the physical meter currently installed on the supply point"
+          },
+          "current_supplier": {
+            "type": "string",
+            "description": "A unique three character code used to identify the current supplier"
+          },
+          "current_supplier_name": {
+            "type": "string",
+            "description": "Name of the current Supplier"
+          },
+          "meter_capacity": {
+            "type": "string",
+            "description": "The amount of gas that can be passed through the meter in a given time period. This is the manufacturer's maximum value"
+          },
+          "meter_mechanism": {
+            "type": "string",
+            "description": "The coded value of the description of the Meter Mechanism"
+          },
+          "meter_type": {
+            "type": "string",
+            "description": "The type of meter installed at the supply point"
+          },
+          "meter_model": {
+            "type": "string",
+            "description": "Model of meter installed at the supply point"
+          },
+          "meter_year_of_manufacture": {
+            "type": "string",
+            "description": "The year of manufacture of the meter installed at the supply point"
+          },
+          "smp_status": {
+            "type": "string",
+            "description": "The current status of the operability of the supply meter point"
+          },
+          "meter_installation_date": {
+            "type": "string",
+            "description": "The date of when the meter was installed",
+            "format": "date-time"
+          },
+          "meter_asset_manager_effective_date": {
+            "type": "string",
+            "description": "The date of when the MAM became effective for the Supply Point",
+            "format": "date-time"
+          },
+          "meter_asset_manager_id": {
+            "type": "string",
+            "description": "An identification number for the registered MAM for the Supply Point"
+          },
+          "meter_asset_manager_name": {
+            "type": "string",
+            "description": "The company name of the registered MAM for the Supply Point"
+          },
+          "service_effective_valid_from": {
+            "type": "string",
+            "description": "The date of when the service becomes effective for the Supply Point",
+            "format": "date-time"
+          },
+          "map_id": {
+            "type": "string",
+            "description": "MAP ID"
+          },
+          "meter_asset_manufacturer": {
+            "type": "string",
+            "description": "Manufacturer of the supply point meter"
+          },
+          "dcc_service_flag": {
+            "type": "string",
+            "description": "Data Communications Company (DCC) Service Flag"
+          },
+          "dcc_service_flag_effective_from_date": {
+            "type": "string",
+            "description": "The first inclusive calendar date for which the status of Data Communications Company (DCC) Service Flag applies"
+          },
+          "removal_date": {
+            "type": "string",
+            "description": "Date of meter point removal",
+            "format": "date-time"
+          },
+          "network_short_code": {
+            "type": "string",
+            "description": "Gas distribution network short code"
+          },
+          "current_shipper": {
+            "type": "string",
+            "description": "Name of the current Shipper assigned to the Supply Point"
+          },
+          "incoming_supplier": {
+            "type": "string",
+            "description": "Name of the Incoming Supplier"
+          },
+          "incoming_supplier_short_code": {
+            "type": "string",
+            "description": "A unique three character code used to identify the Incoming Supplier"
+          },
+          "previous_supplier_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 digit unique Supplier Short Code for the previous Supplier"
+          },
+          "previous_supplier": {
+            "type": "string",
+            "description": "Name of the last previous Supplier assigned to the Supply Point"
+          },
+          "gt_reference_number": {
+            "type": "string",
+            "description": "Gas Transporter reference number"
+          },
+          "current_supplier_effective_date": {
+            "type": "string",
+            "description": "Date on which the current Supplier took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "current_map_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the current MAP took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "current_map_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the current MAP ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_map_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 character, unique short code for the previous MAP"
+          },
+          "previous_map_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the previous MAP took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_map_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the previous MAP ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "incoming_map_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 character, unique short code for the incoming MAP"
+          },
+          "incoming_map_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the incoming MAP takes over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_supplier_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the previous Supplier took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_supplier_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the previous Supplier ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "incoming_supplier_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the incoming Supplier takes over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_mam_short_code": {
+            "type": "string",
+            "description": "Specifies the 3 character, unique short code for the previous MAM"
+          },
+          "previous_mam": {
+            "type": "string",
+            "description": "Name of previous MAM"
+          },
+          "previous_mam_effective_from_date": {
+            "type": "string",
+            "description": "Date on which the previous MAM took over responsibility for the Supply Point",
+            "format": "date-time"
+          },
+          "previous_mam_effective_to_date": {
+            "type": "string",
+            "description": "Date on which the previous MAM ends it's responsibility for the Supply Point",
+            "format": "date-time"
+          }
+        },
+        "description": "A Meter Asset object",
+        "xml": {
+          "name": "meter"
+        },
+        "example": {
+          "mprn": "string",
+          "msn": "string",
+          "current_supplier": "string",
+          "current_supplier_name": "string",
+          "meter_capacity": "string",
+          "meter_mechanism": "string",
+          "meter_type": "string",
+          "meter_model": "string",
+          "meter_year_of_manufacture": "string",
+          "smp_status": "string",
+          "meter_installation_date": "string",
+          "meter_asset_manager_effective_date": "string",
+          "meter_asset_manager_id": "string",
+          "meter_asset_manager_name": "string",
+          "service_effective_valid_from": "string",
+          "map_id": "string",
+          "meter_asset_manufacturer": "string",
+          "dcc_service_flag": "string",
+          "dcc_service_flag_effective_from_date": "string",
+          "removal_date": "string",
+          "network_short_code": "string",
+          "current_shipper": "string",
+          "incoming_supplier": "string",
+          "incoming_supplier_short_code": "string",
+          "previous_supplier_short_code": "string",
+          "previous_supplier": "string",
+          "gt_reference_number": "string",
+          "current_supplier_effective_date": "string",
+          "current_map_effective_from_date": "string",
+          "current_map_effective_to_date": "string",
+          "previous_map_short_code": "string",
+          "previous_map_effective_from_date": "string",
+          "previous_map_effective_to_date": "string",
+          "incoming_map_short_code": "string",
+          "incoming_map_effective_from_date": "string",
+          "previous_supplier_effective_from_date": "string",
+          "previous_supplier_effective_to_date": "string",
+          "incoming_supplier_effective_from_date": "string",
+          "previous_mam_short_code": "string",
+          "previous_mam": "string",
+          "previous_mam_effective_from_date": "string",
+          "previous_mam_effective_to_date": "string"
+        }
+      }
+    }
+  }
+}

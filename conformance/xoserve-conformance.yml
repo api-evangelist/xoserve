@@ -1,0 +1,122 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Derived from openapi/ and the provider's portal metadata, plus
+  https://www.xoserve.com/about-us/ (accreditations and memberships),
+  https://www.xoserve.com/products-services/data-products/gas-apis/ and
+  https://www.xoserve.com/products-services/market-participant-data/market-domain-data-mdd/.
+description: >-
+  Which cross-cutting and industry standards the Xoserve gas API estate actually conforms to. The
+  headline finding is a split: Xoserve is a certified organisation (ISO 27001:2022, ISO 9001:2015)
+  operating under hard GB regulatory instruments (UNC, DSC, REC), but its API surface conforms to
+  almost no API-layer standard beyond OpenAPI 3.0.1 and plain API-key auth. No OAuth, no OIDC, no
+  RFC 9457, no consumer-data-right standard.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      All four exported specs declare openapi 3.0.1. Note the anonymous Azure APIM export strips
+      paths and components, so the published documents are structurally valid but empty of operations;
+      the real operation and schema detail is reconstituted in overlays/ from the provider's own
+      portal API.
+  - id: json-schema
+    conforms: true
+    evidence: >-
+      Provider publishes OpenAPI 3.0 component schemas at
+      /developer/apis/{api}/schemas/{schemaId} (application/vnd.oai.openapi.components+json); saved
+      verbatim to json-schema/.
+  - id: api-key-auth
+    conforms: true
+    evidence: 'securitySchemes apiKey in header (APIKey) and in query (subscription-key) on all four specs'
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      Portal metadata reports empty oAuth2AuthenticationSettings for all four APIs;
+      /.well-known/oauth-authorization-server returns 404 on every host.
+  - id: openid-connect
+    conforms: false
+    evidence: >-
+      Portal metadata reports empty openidAuthenticationSettings; /.well-known/openid-configuration
+      returns 404 on both www.xoserve.com and discoveryapiportal.correla.com.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use the Azure APIM envelope {"statusCode","message"} with Content-Type application/json;
+      no application/problem+json anywhere. See errors/xoserve-problem-types.yml.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on every host probed 2026-07-27.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No deprecation policy and no Sunset/Deprecation headers; Meter Asset v1 runs indefinitely alongside v2.
+  - id: rfc9727-api-catalog
+    conforms: false
+    evidence: /.well-known/api-catalog returns 404.
+  - id: http-authentication-challenge
+    conforms: true
+    evidence: >-
+      Gateway returns a well-formed WWW-Authenticate challenge on 401
+      (AzureApiManagementKey realm=..., name="APIKey", type="header").
+  - id: tls-1.2-plus
+    conforms: true
+    evidence: 'security/xoserve-domain-security.yml — TLSv1.2 on both Correla hosts, TLSv1.3 on www.xoserve.com; HTTPS-only (portal protocols: ["https"])'
+  - id: hsts
+    conforms: partial
+    evidence: >-
+      HSTS present on www.xoserve.com (max-age 63072000) and discoveryapiportal.correla.com
+      (max-age 31536000); ABSENT on the live API gateway discoveryapi.correla.com.
+  - id: pagination
+    conforms: false
+    evidence: Single-object responses; no cursor, limit/offset or list envelope in any schema.
+  - id: idempotency-key
+    conforms: false
+    evidence: >-
+      No idempotency-key contract is published. Moot in practice — every operation is an HTTP GET and
+      therefore safe and idempotent by method. See conventions/xoserve-conventions.yml.
+  - id: entso-e-eic
+    conforms: true
+    evidence: >-
+      Xoserve is the GB issuing office for ENTSO-E Energy Identification Codes and publishes the EIC
+      list — but as a document on the website, not through an API.
+  - id: green-button-espi
+    conforms: false
+    evidence: No Green Button, ESPI or NAESB implementation. Britain imposes no such obligation on the gas CDSP.
+  - id: cdr-consumer-data-standards
+    conforms: false
+    evidence: No Australian-CDR-style consent flow, data-recipient accreditation or consumer-directed data sharing.
+  - id: iec-cim-61968
+    conforms: false
+    evidence: >-
+      Payload shapes are the proprietary UNC/REC gas market vocabulary (MPRN, MSN, AQ, SOQ, LDZ, exit
+      zone, market sector code), not IEC CIM.
+  - id: fhir-r4
+    conforms: false
+  - id: scim2
+    conforms: false
+  - id: odata
+    conforms: false
+  - id: graphql
+    conforms: false
+  - id: asyncapi
+    conforms: false
+    evidence: No event, streaming or webhook surface exists on the public estate.
+certifications:
+  published: true
+  url: https://www.xoserve.com/about-us/
+  section: Our accreditations and memberships
+  items:
+    - id: iso-27001-2022
+      name: ISO/IEC 27001:2022 — Information security management
+      scope_verbatim: >-
+        "Providing information security for transportation transactions for all the major gas
+        networks. This applies to operations, finance, human resources, business support and
+        customers, as well as our legal and assurance activities."
+    - id: iso-9001-2015
+      name: ISO 9001:2015 — Quality management
+      note: Held since 2005.
+  absent: [SOC 2, PCI DSS, HIPAA, FedRAMP, CSA STAR, Cyber Essentials]
+  absent_note: No SOC 2, PCI DSS or other certification is claimed anywhere on the site, and no trust portal exists.
+regulatory:
+  - {id: unc, name: Uniform Network Code, role: 'the code Xoserve operates the central gas systems under'}
+  - {id: dsc, name: Data Services Contract, role: 'contract between Xoserve and Gas Transporters, IGTs and Shippers'}
+  - {id: rec, name: Retail Energy Code, role: 'governs the Gas Enquiry Service APIs; access granted by RECCo per the REC Data Access Matrix'}

@@ -1,0 +1,24 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Public package-registry searches plus the Xoserve Gas APIs page
+  (https://www.xoserve.com/products-services/data-products/gas-apis/), the Discovery API Platform
+  portal (https://discoveryapiportal.correla.com/) and the Xoserve Try Before You Buy API Service
+  Subscription Guide.
+result: none
+packages: []
+summary: >-
+  Xoserve and its delivery partner Correla ship no first-party client libraries. The four gas APIs
+  are consumed as plain HTTPS GET calls with an APIKey header (or subscription-key query parameter);
+  the provider's own onboarding material tells subscribers to copy the endpoint out of the portal
+  and call it directly. No SDKs pointer is wired in apis.yml because no SDK exists.
+registries_searched:
+  - {registry: npm, query: xoserve, results: 0}
+  - {registry: npm, query: correla, results: 0}
+  - {registry: pypi, query: xoserve, status: 404}
+  - {registry: github, query: 'github.com/xoserve', note: 'personal account, 0 public repos — not a Xoserve org'}
+  - {registry: github, query: 'github.com/correla', note: 'no GitHub organization (API returns 404)'}
+notes: >-
+  No GitHub organization was found for either Xoserve or Correla, so no GitHubOrganization pointer is
+  wired either. Nothing here is a gap in the harvest — it is the real shape of a regulated central
+  data services provider whose consumers are a closed set of licensed GB gas market parties.

@@ -1,0 +1,67 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Xoserve
+providerId: xoserve
+generated: '2026-07-27'
+method: searched
+created: '2026-07-27'
+modified: '2026-07-27'
+tags:
+  - Gas
+  - Energy
+  - Rate Limiting
+description: >-
+  Xoserve meters its gas APIs by an ANNUAL call allowance, not by a per-second or per-minute throttle.
+  The Supply Point Quantities API is sold in bands A to F setting "the maximum allowance of API calls
+  allowed each year"; the band is written into the customer's contract. Azure API Management Products
+  can also carry quota policies (the provider's own subscription guide defines a Product as enclosing
+  APIs "with number of relevant Policies (such as max. allowed quota per month etc.)"), but no
+  per-Product policy values are published. No rate-limit response headers were observed on the live
+  gateway and no 429 behaviour is documented.
+sources:
+  - https://www.xoserve.com/products-services/data-products/gas-apis/
+  - https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
+headers:
+  remaining: null
+  reset: null
+  requestId: null
+responseCodes:
+  throttled: null
+  unauthorized: 401
+limits:
+  - name: Supply Point Quantities — Band A
+    scope: subscription
+    metric: api_calls
+    limit: 60000
+    timeFrame: year
+  - name: Supply Point Quantities — Band B
+    scope: subscription
+    metric: api_calls
+    limit: 600000
+    timeFrame: year
+  - name: Supply Point Quantities — Band C
+    scope: subscription
+    metric: api_calls
+    limit: 3600000
+    timeFrame: year
+  - name: Supply Point Quantities — Band D
+    scope: subscription
+    metric: api_calls
+    limit: 7200000
+    timeFrame: year
+  - name: Supply Point Quantities — Band E
+    scope: subscription
+    metric: api_calls
+    limit: 12000000
+    timeFrame: year
+  - name: Supply Point Quantities — Band F
+    scope: subscription
+    metric: api_calls
+    limit: 18000000
+    timeFrame: year
+notes: >-
+  Gas Enquiry Service APIs (Supplier, Meter Asset v1/v2) publish no allowance bands — their charging
+  sits in the REC Charging Statement administered by RECCo. Since consumption is reconciled
+  commercially rather than signalled in the response, an agent cannot detect approaching exhaustion
+  from the API itself; budget against the contracted band out of band.

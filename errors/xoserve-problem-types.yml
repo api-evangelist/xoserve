@@ -1,0 +1,65 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Live anonymous probes of https://discoveryapi.correla.com on 2026-07-27 (response bodies and
+  headers captured verbatim), plus the response metadata Xoserve publishes at
+  https://discoveryapiportal.correla.com/developer/apis/{api}/operations/{operationId}.
+format: azure-apim-json
+format_note: >-
+  NOT RFC 9457. Responses use Content-Type application/json with the Azure API Management default
+  error envelope {"statusCode": <int>, "message": "<string>"} — there is no `type`, `title`,
+  `detail` or `instance` member and no application/problem+json media type anywhere on the surface.
+envelope:
+  media_type: application/json
+  fields:
+    statusCode: HTTP status code, repeated in the body
+    message: Human-readable message. No machine-readable error code is published.
+coverage_caveat: >-
+  Xoserve's published operation metadata documents ONLY the 200 response for all four operations — no
+  4xx or 5xx response is declared in the provider's own contract. The problems below are therefore
+  gateway-level behaviours observed live rather than a published error reference; Xoserve publishes
+  no error-code reference page. Application-level validation errors (for example a request with none
+  of the mandatory filters, or an MPRN that does not exist) could not be observed because the gateway
+  rejects every unauthenticated call before it reaches the backend.
+problems:
+  - status: 401
+    title: Access denied due to missing subscription key
+    message: >-
+      Access denied due to missing subscription key. Make sure to include subscription key when
+      making requests to an API.
+    headers:
+      WWW-Authenticate: 'AzureApiManagementKey realm="https://discoveryapi.correla.com/<api>",name="APIKey",type="header"'
+    cause: No APIKey header and no subscription-key query parameter on the request.
+    remediation: >-
+      Send the subscription key issued for your approved subscription as the APIKey request header.
+      Keys are issued only after contract countersigning — see access in review.yml.
+    observed: '2026-07-27'
+    applies_to: [getShipper_1, getSupplier_1, getMeterAsset_1]
+  - status: 401
+    title: Access denied due to invalid subscription key
+    message: >-
+      Access denied due to invalid subscription key. Make sure to provide a valid key for an active
+      subscription.
+    headers:
+      WWW-Authenticate: 'AzureApiManagementKey realm="https://discoveryapi.correla.com/<api>",name="APIKey",type="header"'
+    cause: >-
+      A key was supplied but does not match an active subscription — wrong key, revoked key, or a key
+      from a different subscription (keys are bound to a single subscription and are not portable).
+    remediation: Re-check the key against the subscription in the portal; request reissue via the Customer Life Cycle team.
+    observed: '2026-07-27'
+    applies_to: [getShipper_1, getSupplier_1, getMeterAsset_1]
+  - status: 404
+    title: Resource not found
+    message: Resource not found
+    cause: >-
+      The request did not match a configured API route — most often the version segment was omitted
+      (https://discoveryapi.correla.com/shipper instead of /shipper/v1), or the gateway root was
+      called directly.
+    remediation: >-
+      Include the version path segment. The provider's exported OpenAPI `servers` URL omits it, which
+      is the most likely source of this error — see conventions/xoserve-conventions.yml#versioning.
+    observed: '2026-07-27'
+undocumented:
+  - Rate/quota exhaustion. The annual call-allowance bands are contractual; no 429 behaviour is published.
+  - Backend validation errors for missing mandatory filters or unknown MPRN/MSN.
+  - 5xx behaviour during the daily maintenance windows published at https://www.xoserve.com/news-updates/news-and-updates/planned-outages/

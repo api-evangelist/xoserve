@@ -1,0 +1,131 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://www.xoserve.com/products-services/data-products/gas-apis/,
+  https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf,
+  the Discovery API Platform portal API (developer/apis, developer/products, developer/apis/{api}/operations)
+  and live probes of https://discoveryapi.correla.com on 2026-07-27.
+description: >-
+  How the Xoserve gas APIs behave across every operation: an Azure API Management gateway fronting
+  four read-only enquiry services. There is no request body anywhere on the surface — every operation
+  is a single HTTP GET on the API root path with query-string filters — so most of the write-side
+  conventions (idempotency keys, request signing, concurrency control) simply do not apply. What the
+  provider does define is the key model, the segment version scheme, dual JSON/XML representations,
+  and an annual call-allowance quota rather than a per-second rate limit.
+base_url: https://discoveryapi.correla.com
+api_style: >-
+  REST over HTTPS only (portal reports protocols: ["https"]). RESTful JSON/XML services — the
+  provider's own subscription guide states the APIs "support both JSON and XML format messages but
+  [do not] support SOAP". Each API exposes exactly one GET operation at the root path of its segment.
+
+authentication:
+  scheme: Azure API Management subscription key
+  mechanisms:
+    - {in: header, name: APIKey}
+    - {in: query, name: subscription-key}
+  challenge_header: 'WWW-Authenticate: AzureApiManagementKey realm="https://discoveryapi.correla.com/<api>",name="APIKey",type="header"'
+  oauth2: false
+  openid_connect: false
+  mtls: false
+  key_scope: >-
+    A key is bound to one subscription (one Application over one Product) and, per the Try Before You
+    Buy guide, "cannot be utilized for any other subscriptions."
+  detail: authentication/xoserve-authentication.yml
+  docs: https://www.xoserve.com/products-services/data-products/gas-apis/
+
+idempotency:
+  supported: true
+  mechanism: none
+  detail: >-
+    Xoserve publishes no idempotency-key contract, and needs none: all four operations are HTTP GET,
+    which is safe and idempotent by method definition (RFC 9110 §9.2.2). There is no write surface on
+    the public API estate, so a retry can never duplicate an effect. No Idempotency-Key header, no
+    request-deduplication window and no replay indicator are documented or observed.
+  retryable: true
+  retry_guidance: >-
+    GETs may be retried freely on transport failure. The only cost of a retry is a hit against the
+    annual call allowance (see rate-limits/xoserve-rate-limits.yml), which is metered per call.
+
+pagination:
+  supported: false
+  detail: >-
+    No pagination. Each operation returns a single object for the matched supply point or meter
+    (ShipperRestResponse, SupplierRestResponse, MeterAssetRestResponse) — there is no list envelope,
+    no cursor, no limit/offset parameter and no has_more field in any published schema or example.
+
+filtering:
+  style: query-string filters, at least one mandatory
+  rules:
+    - api: shipper
+      mandatory: 'at least one of mprn or postcode'
+      verbatim: >-
+        "There are two different filters that could be applied to the API call, where at least 1 is
+        mandatory. These is MPRN, or POSTCODE, the latter could be combined with additional address details"
+    - api: supplier
+      mandatory: 'at least one of mprn, address_id or postcode'
+      verbatim: >-
+        "There are 3 different filters that could be applied to the API call, where at least 1 is
+        mandatory. These are mprn, address_id or postcode, the latter could be combined with
+        additional address detail"
+    - api: meter-asset
+      mandatory: 'mprn and/or msn'
+  address_detail_parameters: [house_no, street, town, county, country, sub_building_name, dependent_street, dependent_local]
+  caveat: >-
+    The Supplier API spells the town filter `Town` (capital T) while the Shipper API spells it `town`.
+    Both are reproduced verbatim from the provider's operation metadata; do not normalise them.
+
+content_negotiation:
+  request: none (no request body on any operation)
+  response_media_types: [application/json, application/xml]
+  detail: >-
+    Every operation publishes both a JSON and an XML representation of the same schema, with an XML
+    root element name declared in the component schema (`xml: {name: root}`).
+
+field_expansion:
+  supported: false
+sparse_fields:
+  supported: false
+metadata:
+  supported: false
+
+request_tracing:
+  request_id_header: null
+  detail: >-
+    No request-id or correlation header is documented, and none was returned on the anonymous 401
+    probes. Azure API Management can emit one but Xoserve does not advertise it. Support is by ticket
+    through https://www.xoserve.com/help-and-support/raise-a-new-support-request/ rather than by
+    request id.
+
+versioning:
+  scheme: uri-path-segment
+  mechanism: >-
+    Azure APIM version sets with versioningScheme "Segment" — the version is a path segment after the
+    API name (/meter-asset/v1, /meter-asset/v2, /shipper/v1, /supplier/v1). Note the OpenAPI the
+    provider exports declares a `servers` URL WITHOUT the version segment; the segment is required in
+    practice and was confirmed live by the 401 responses.
+  current: {shipper: v1, supplier: v1, meter-asset: v2}
+  detail: lifecycle/xoserve-lifecycle.yml
+
+error_envelope:
+  shape: >-
+    Azure API Management default JSON envelope: {"statusCode": <int>, "message": "<string>"}. Not
+    RFC 9457 application/problem+json — Content-Type is application/json.
+  fields: [statusCode, message]
+  detail: errors/xoserve-problem-types.yml
+
+rate_limit_signaling:
+  headers: none observed
+  model: >-
+    Not a per-second throttle but an annual call allowance ("hits") sold in bands A–F (60,000 to
+    18,000,000 calls per year) and written into the customer's contract. Nothing in the response
+    signals remaining allowance; consumption is reconciled commercially.
+  detail: rate-limits/xoserve-rate-limits.yml
+
+access_gate:
+  self_serve: false
+  detail: >-
+    Every product carries subscriptionRequired=true AND approvalRequired=true. Browsing the catalogue
+    and exporting the specs is anonymous; calling is not. Eligibility is a regulated-status test
+    before it is a paperwork test — Gas Shippers only for Supply Point Quantities (via
+    xoserve.customer.lifecycle.team@xoserve.co.uk), REC parties via RECCo (enquiries@recmanager.co.uk)
+    for the Gas Enquiry Service APIs.

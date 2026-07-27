@@ -1,0 +1,29 @@
+generated: '2026-07-27'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the four operations Xoserve publishes through the Discovery API
+  Platform. Every operationId below was verified verbatim against
+  https://discoveryapiportal.correla.com/developer/apis/{api}/operations (HTTP 200, 2026-07-27);
+  parameters and response fields come from the provider's own operation metadata and component-schema
+  documents (see json-schema/, examples/, overlays/). Cross-cutting rules cite
+  conventions/xoserve-conventions.yml, errors/xoserve-problem-types.yml,
+  authentication/xoserve-authentication.yml, rate-limits/xoserve-rate-limits.yml and
+  agentic-access/xoserve-agentic-access.yml.
+caveat: >-
+  These skills document a CLOSED API estate. Every one of them is only executable by an accredited GB
+  gas industry party holding an approved Azure API Management subscription key. Each skill states its
+  access route up front (Xoserve Customer Life Cycle team for Supply Point Quantities; RECCo for the
+  Gas Enquiry Service APIs) rather than implying self-serve access.
+skills:
+  - file: xoserve-lookup-supply-point-quantities.md
+    name: Look up Formula Year AQ and SOQ for a gas supply point
+    api: openapi/xoserve-shipper-api-openapi.yml
+    operations: [getShipper_1]
+  - file: xoserve-resolve-supply-point-from-address.md
+    name: Resolve a gas supply meter point from an address
+    api: openapi/xoserve-supplier-api-openapi.yml
+    operations: [getSupplier_1]
+  - file: xoserve-enquire-meter-asset.md
+    name: Enquire on a gas meter asset (v1 and v2)
+    api: openapi/xoserve-meter-asset-api-v2-openapi.yml
+    operations: [getMeterAsset_1]

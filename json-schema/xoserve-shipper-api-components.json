@@ -1,0 +1,152 @@
+{
+  "components": {
+    "schemas": {
+      "ShipperResponse": {
+        "type": "object",
+        "properties": {
+          "mprn": {
+            "type": "string",
+            "description": "Unique identifier for a supply offtake point and used to identify the meter to be switched"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country"
+          },
+          "county": {
+            "type": "string",
+            "description": "County"
+          },
+          "postcode": {
+            "type": "string",
+            "description": "Postcode"
+          },
+          "street": {
+            "type": "string",
+            "description": "Street"
+          },
+          "town": {
+            "type": "string",
+            "description": "Town"
+          },
+          "installation_number": {
+            "type": "string",
+            "description": "Installation Number"
+          },
+          "amr_indicator": {
+            "type": "string",
+            "description": "Automated Meter Reading (AMR) Indicator, shows if an AMR device is currently installed"
+          },
+          "csep_id": {
+            "type": "string",
+            "description": "Unique identifier for the Connected System Exit Point (CSEP) that the Supply Point resides in"
+          },
+          "current_aq_roll_value": {
+            "type": "number",
+            "description": "Current Supply Meter Point Annual Quantity (AQ) of gas assumed to be off taken over a period based on historical information provided in kWh",
+            "format": "double"
+          },
+          "current_formula_year_soq_value": {
+            "type": "number",
+            "description": "Current Formula Year Supply Meter Point Supply Offtake Quantity (SOQ)",
+            "format": "double"
+          },
+          "current_formula_year_aq_value": {
+            "type": "number",
+            "description": "Current Formula Year Supply Meter Point Annual Quantity (AQ)",
+            "format": "double"
+          },
+          "current_soq_roll_value": {
+            "type": "number",
+            "description": "Current Supply Meter Point Standard Offtake Quantity (AQ) of gas assumed to be off taken over a period based on historical information provided in kWh",
+            "format": "double"
+          },
+          "dependent_local": {
+            "type": "string",
+            "description": "Dependent Local"
+          },
+          "dependent_street": {
+            "type": "string",
+            "description": "Dependent Street"
+          },
+          "distribution_network_operator": {
+            "type": "string",
+            "description": "Name of the Gas Transporter Organisation where the Supply Point is located"
+          },
+          "exit_zone": {
+            "type": "string",
+            "description": "This is a discrete gas system supplying gas to a region with a Local Distribution Zone (LDZ)"
+          },
+          "house_no": {
+            "type": "string",
+            "description": "House Number"
+          },
+          "local_distribution_zone": {
+            "type": "string",
+            "description": "This is a discrete gas system supplying gas to a region"
+          },
+          "market_sector_code": {
+            "type": "string",
+            "description": "Shows the Market Sector that the Supply Point resides in"
+          },
+          "perspective_formula_year_aq_value": {
+            "type": "number",
+            "description": "Perspective Formula Year Supply Meter Point Annual Quantity (AQ)",
+            "format": "double"
+          },
+          "perspective_formula_year_soq_value": {
+            "type": "number",
+            "description": "Perspective Formula Year Supply Meter Point Supply Offtake Quantity (SOQ)",
+            "format": "double"
+          },
+          "perspective_formula_year_effective_date": {
+            "type": "string",
+            "description": "Perspective Formula Year Supply Meter Point Quantity Values Effective Date"
+          },
+          "sub_building_name": {
+            "type": "string",
+            "description": "Sub Building Name"
+          }
+        }
+      },
+      "ShipperRestResponse": {
+        "type": "object",
+        "properties": {
+          "mprn": {
+            "$ref": "#/components/schemas/ShipperResponse"
+          }
+        }
+      },
+      "GetRequest": {
+        "format": "int64",
+        "x-apim-inline": true
+      },
+      "GetRequest-1": {
+        "x-apim-inline": true
+      },
+      "GetRequest-2": {
+        "x-apim-inline": true
+      },
+      "GetRequest-3": {
+        "x-apim-inline": true
+      },
+      "GetRequest-4": {
+        "x-apim-inline": true
+      },
+      "GetRequest-5": {
+        "x-apim-inline": true
+      },
+      "GetRequest-6": {
+        "x-apim-inline": true
+      },
+      "GetRequest-7": {
+        "x-apim-inline": true
+      },
+      "GetRequest-8": {
+        "x-apim-inline": true
+      },
+      "GetRequest-9": {
+        "x-apim-inline": true
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://www.xoserve.com/change/uk-link-releases/,
+  https://www.xoserve.com/news-updates/news-and-updates/planned-outages/,
+  https://www.xoserve.com/news-updates/news-and-updates/issues-register/,
+  https://www.xoserve.com/live-updates/,
+  https://www.xoserve.com/change/customer-change-register/,
+  and the Discovery API Platform version-set metadata
+  (https://discoveryapiportal.correla.com/developer/apis?api-version=2022-04-01-preview).
+versioning:
+  scheme: uri-path-segment
+  mechanism: >-
+    Azure API Management version sets with versioningScheme "Segment". The version is a path segment
+    after the API name. Three version sets are in play: 60265ed9901b2cabf37091e6 (Meter Asset, v1 and
+    v2), 60d0a4daa2fa833773705435 (Shipper, v1) and 60d0a54d54680db439823316 (Supplier, v1).
+  current:
+    shipper: v1
+    supplier: v1
+    meter-asset: v2
+  caveat: >-
+    The provider's exported OpenAPI documents declare `servers` without the version segment
+    (https://discoveryapi.correla.com/meter-asset). The segment is mandatory in practice — the
+    versionless path returns 404 while /meter-asset/v1 and /meter-asset/v2 return 401. Overlays in
+    overlays/ correct the servers entry.
+  docs: https://discoveryapiportal.correla.com/
+concurrent_versions:
+  - {api: meter-asset, versions: [v1, v2], note: 'both live simultaneously; v2 adds 26 fields (42 vs 16)'}
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecated_operations: []
+  detail: >-
+    No API deprecation policy is published. Meter Asset v1 remains live alongside v2 with no
+    announced retirement date, no Deprecation or Sunset header (RFC 8594) and no `deprecated: true`
+    flag in any exported spec. Retirement of an API service would be handled as a change through the
+    DSC change-management process rather than through an API-level deprecation notice — see
+    https://www.xoserve.com/change/customer-change-register/.
+release_programme:
+  name: UK Link releases
+  url: https://www.xoserve.com/change/uk-link-releases/
+  cadence: >-
+    Major releases (significant changes to functionality) three times a year, plus minor releases
+    (smaller enhancements) and ad-hoc changes requested by DSC customers via Change Proposal.
+  governance: Change Management Committee; DSC customer change register
+  detail: changelog/xoserve-changelog.yml
+status_page: https://www.xoserve.com/news-updates/news-and-updates/planned-outages/
+status_surfaces:
+  - {name: Planned outages, url: 'https://www.xoserve.com/news-updates/news-and-updates/planned-outages/', note: 'per-system daily maintenance windows and planned outages; includes an explicit "Application Programming Interface (API)" row (no maintenance window, no planned outage as at 2026-07-27)'}
+  - {name: Live updates, url: 'https://www.xoserve.com/live-updates/', note: 'ongoing incident updates for systems being actively worked on'}
+  - {name: Issues Register, url: 'https://www.xoserve.com/news-updates/news-and-updates/issues-register/', note: 'record of high-priority incidents and system issues with cause, impact, affected sectors, status and remedial action — published as an XLSX download, not a feed'}
+maintenance_windows:
+  - {system: UK Link, window: '05:00–07:00 daily'}
+  - {system: Contact Management Service (CMS), window: '00:00–07:00 daily'}
+  - {system: Service Portal, window: '00:00–03:15 daily'}
+  - {system: Cloud IX service, window: '05:00–07:00 daily'}
+  - {system: Application Programming Interface (API), window: none}
+  - {system: Gemini, window: none}
+  - {system: SwitchStream, window: none}
+sla:
+  url: null
+  public_uptime_target: null
+  notes: >-
+    No public uptime SLA. Service levels for the gas APIs sit inside the Data Services Contract (DSC)
+    and, for the Gas Enquiry Service APIs, the Retail Energy Code — both are contractual instruments
+    between named parties rather than a published availability commitment.
+support:
+  raise_request: https://www.xoserve.com/help-and-support/raise-a-new-support-request/
+  check_status: https://www.xoserve.com/help-and-support/check-status-of-an-existing-support-request/

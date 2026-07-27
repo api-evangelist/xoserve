@@ -1,0 +1,248 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Xoserve Shipper v1
+  version: 1.0.0
+extends: openapi/xoserve-shipper-api-openapi.yml
+x-apievangelist:
+  generated: '2026-07-27'
+  method: searched
+  source: https://discoveryapiportal.correla.com/developer/apis/shipper/operations/getShipper_1?api-version=2022-04-01-preview
+    (operation detail, HTTP 200) and https://discoveryapiportal.correla.com/developer/apis/shipper/schemas/60d0a4dab43ed003bc4c0812?api-version=2022-04-01-preview
+    (components schema document, HTTP 200); 401/404 response shapes captured from live probes of https://discoveryapi.correla.com/
+    on 2026-07-27
+  rationale: 'Azure API Management strips paths and components from the anonymous OpenAPI export, so the harvested
+    openapi/ file carries `paths: {}`. Every element added by this overlay was retrieved verbatim from Xoserve/Correla''s
+    own developer-portal API — nothing is invented. Applying the overlay reconstitutes the operation the provider
+    publishes.'
+actions:
+- target: $.servers
+  update:
+  - url: https://discoveryapi.correla.com/shipper/v1
+    description: Live gateway, segment-versioned (v1). Confirmed 401 (subscription key required) on 2026-07-27.
+- target: $.paths
+  update:
+    /:
+      get:
+        operationId: getShipper_1
+        summary: Shipper
+        description: There are two different filters that could be applied to the API call, where at least 1 is
+          mandatory. These is MPRN, or POSTCODE, the latter could be combined with additional address details
+        tags:
+        - Shipper
+        parameters:
+        - name: mprn
+          in: query
+          required: false
+          description: Format - int64. Format - int64. Meter Point Reference Number
+          schema:
+            type: integer
+        - name: postcode
+          in: query
+          required: false
+          description: Postcode
+          schema:
+            type: string
+        - name: house_no
+          in: query
+          required: false
+          description: House Number
+          schema:
+            type: string
+        - name: street
+          in: query
+          required: false
+          description: Street
+          schema:
+            type: string
+        - name: town
+          in: query
+          required: false
+          description: Town
+          schema:
+            type: string
+        - name: county
+          in: query
+          required: false
+          description: County
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: false
+          description: Country
+          schema:
+            type: string
+        - name: sub_building_name
+          in: query
+          required: false
+          description: Sub Building Name
+          schema:
+            type: string
+        - name: dependent_street
+          in: query
+          required: false
+          description: Dependent Street
+          schema:
+            type: string
+        - name: dependent_local
+          in: query
+          required: false
+          description: Dependent Local
+          schema:
+            type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ShipperRestResponse'
+                example:
+                  mprn:
+                    mprn: string
+                    country: string
+                    county: string
+                    postcode: string
+                    street: string
+                    town: string
+                    installation_number: string
+                    amr_indicator: string
+                    csep_id: string
+                    current_aq_roll_value: 0
+                    current_formula_year_soq_value: 0
+                    current_formula_year_aq_value: 0
+                    current_soq_roll_value: 0
+                    dependent_local: string
+                    dependent_street: string
+                    distribution_network_operator: string
+                    exit_zone: string
+                    house_no: string
+                    local_distribution_zone: string
+                    market_sector_code: string
+                    perspective_formula_year_aq_value: 0
+                    perspective_formula_year_soq_value: 0
+                    perspective_formula_year_effective_date: string
+                    sub_building_name: string
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/ShipperRestResponse'
+                example: <ShipperRestResponse> <mprn> <mprn>string</mprn> <country>string</country> <county>string</county>
+                  <postcode>string</postcode> <street>string</street> <town>string</town> <installation_number>string</installation_number>
+                  <amr_indicator>string</amr_indicator> <csep_id>string</csep_id> <current_aq_roll_value>0</current_aq_roll_value>
+                  <current_formula_year_soq_value>0</current_formula_year_soq_value> <current_formula_year_aq_value>0</current_formula_year_aq_value>
+                  <current_soq_roll_value>0</current_soq_roll_value> <dependent_local>string</dependent_local> <dependent_street>string</dependent_street>
+                  <distribution_network_operator>string</distribution_network_operator> <exit_zone>string</exit_zone>
+                  <house_no>string</house_no> <local_distribution_zone>string</local_distribution_zone> <market_sector_code>string</market_sector_code>
+                  <perspective_formula_year_aq_value>0</perspective_formula_year_aq_value> <perspective_formula_year_soq_value>0</perspective_formula_year_soq_value>
+                  <perspective_formula_year_effective_date>string</perspective_formula_year_effective_date> <sub_building_name>string</sub_building_name>
+                  </mprn> </ShipperRestResponse>
+          '401':
+            description: Access denied — missing or invalid Azure API Management subscription key.
+            content:
+              application/json:
+                example:
+                  statusCode: 401
+                  message: Access denied due to missing subscription key. Make sure to include subscription key
+                    when making requests to an API.
+          '404':
+            description: Resource not found.
+            content:
+              application/json:
+                example:
+                  statusCode: 404
+                  message: Resource not found
+- target: $.components.schemas
+  update:
+    ShipperResponse:
+      type: object
+      properties:
+        mprn:
+          type: string
+          description: Unique identifier for a supply offtake point and used to identify the meter to be switched
+        country:
+          type: string
+          description: Country
+        county:
+          type: string
+          description: County
+        postcode:
+          type: string
+          description: Postcode
+        street:
+          type: string
+          description: Street
+        town:
+          type: string
+          description: Town
+        installation_number:
+          type: string
+          description: Installation Number
+        amr_indicator:
+          type: string
+          description: Automated Meter Reading (AMR) Indicator, shows if an AMR device is currently installed
+        csep_id:
+          type: string
+          description: Unique identifier for the Connected System Exit Point (CSEP) that the Supply Point resides
+            in
+        current_aq_roll_value:
+          type: number
+          description: Current Supply Meter Point Annual Quantity (AQ) of gas assumed to be off taken over a period
+            based on historical information provided in kWh
+          format: double
+        current_formula_year_soq_value:
+          type: number
+          description: Current Formula Year Supply Meter Point Supply Offtake Quantity (SOQ)
+          format: double
+        current_formula_year_aq_value:
+          type: number
+          description: Current Formula Year Supply Meter Point Annual Quantity (AQ)
+          format: double
+        current_soq_roll_value:
+          type: number
+          description: Current Supply Meter Point Standard Offtake Quantity (AQ) of gas assumed to be off taken
+            over a period based on historical information provided in kWh
+          format: double
+        dependent_local:
+          type: string
+          description: Dependent Local
+        dependent_street:
+          type: string
+          description: Dependent Street
+        distribution_network_operator:
+          type: string
+          description: Name of the Gas Transporter Organisation where the Supply Point is located
+        exit_zone:
+          type: string
+          description: This is a discrete gas system supplying gas to a region with a Local Distribution Zone (LDZ)
+        house_no:
+          type: string
+          description: House Number
+        local_distribution_zone:
+          type: string
+          description: This is a discrete gas system supplying gas to a region
+        market_sector_code:
+          type: string
+          description: Shows the Market Sector that the Supply Point resides in
+        perspective_formula_year_aq_value:
+          type: number
+          description: Perspective Formula Year Supply Meter Point Annual Quantity (AQ)
+          format: double
+        perspective_formula_year_soq_value:
+          type: number
+          description: Perspective Formula Year Supply Meter Point Supply Offtake Quantity (SOQ)
+          format: double
+        perspective_formula_year_effective_date:
+          type: string
+          description: Perspective Formula Year Supply Meter Point Quantity Values Effective Date
+        sub_building_name:
+          type: string
+          description: Sub Building Name
+    ShipperRestResponse:
+      type: object
+      properties:
+        mprn:
+          $ref: '#/components/schemas/ShipperResponse'
+- target: $.info
+  update:
+    x-apievangelist-rating-source: https://apis.io/provider/xoserve
+    x-access-gate: accredited-only — subscription AND approval required; keys issued after contract countersigning

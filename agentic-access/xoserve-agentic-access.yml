@@ -1,0 +1,121 @@
+generated: '2026-07-27'
+method: generated
+source: >-
+  The four operations Xoserve publishes through the Discovery API Platform portal API
+  (operationIds verified verbatim at
+  https://discoveryapiportal.correla.com/developer/apis/{api}/operations, HTTP 200, 2026-07-27),
+  classified against the Curity "Access Intelligence" x-agentic-access vocabulary.
+description: >-
+  Recommended x-agentic-access execution contracts for the Xoserve gas APIs. A governance STARTING
+  POINT, not a provider claim — Xoserve publishes no agent access guidance. The surface is entirely
+  read-only (four HTTP GETs, no write operation anywhere), so every operation classifies as
+  action-class `connected` / consequence `read` with the 3600s read token ceiling and no
+  human-in-the-loop requirement on the mechanics.
+  The consequential caveat is NOT the HTTP verb: these reads return identifiable-premise data about
+  GB gas consumers — address, current supplier, meter serial, consumption quantities — under a
+  regulated access regime in which the requesting party must be an accredited industry participant
+  and the consumer never consents. `subject` is therefore marked required and `purpose-required` is
+  set on every operation: an agent must be able to state on whose behalf and for what regulated
+  purpose it is querying a named MPRN. `audience` is left null to bind per deployment.
+summary:
+  operations: 4
+  by_action_class:
+    connected: 4
+    acting: 0
+  by_consequence:
+    read: 4
+    write: 0
+    physical: 0
+    safety-critical: 0
+  human_in_the_loop_required: 0
+  purpose_required: 4
+operations:
+  - path: /
+    method: get
+    operationId: getShipper_1
+    spec: openapi/xoserve-shipper-api-openapi.yml
+    api: Xoserve Shipper API (Supply Point Quantities)
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      constraints:
+        purpose-required: true
+        data-class: identifiable-premise
+        eligibility: 'licensed GB gas Shipper; Azure APIM subscription approved by Xoserve'
+      audit: required
+      audit-reason: >-
+        Returns proposed Formula Year AQ/SOQ for a named MPRN ahead of the market notification —
+        commercially sensitive and premise-identifying.
+  - path: /
+    method: get
+    operationId: getSupplier_1
+    spec: openapi/xoserve-supplier-api-openapi.yml
+    api: Xoserve Supplier API (Supply Point Enquiry)
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      constraints:
+        purpose-required: true
+        data-class: identifiable-premise
+        eligibility: 'REC party, access granted by RECCo per the REC Data Access Matrix'
+      audit: required
+      audit-reason: >-
+        89-field supply meter point record resolvable from a postcode — including current and previous
+        supplier, latest meter read and priority-consumer indicator.
+  - path: /
+    method: get
+    operationId: getMeterAsset_1
+    spec: openapi/xoserve-meter-asset-api-v1-openapi.yml
+    api: Xoserve Meter Asset API v1
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      constraints:
+        purpose-required: true
+        data-class: identifiable-premise
+        eligibility: 'REC party, access granted by RECCo per the REC Data Access Matrix'
+      audit: required
+  - path: /
+    method: get
+    operationId: getMeterAsset_1
+    spec: openapi/xoserve-meter-asset-api-v2-openapi.yml
+    api: Xoserve Meter Asset API v2
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      constraints:
+        purpose-required: true
+        data-class: identifiable-premise
+        eligibility: 'REC party, access granted by RECCo per the REC Data Access Matrix'
+      audit: required
+      audit-reason: >-
+        v2 adds full supplier / MAP / MAM change history, making bulk enumeration a switching-market
+        intelligence risk as well as a privacy one.
+deployment_notes:
+  - >-
+    Rate governance is contractual, not technical: the annual call-allowance band (60,000–18,000,000
+    calls/year) is the real ceiling and nothing in the response signals remaining budget. Give an agent
+    a hard local quota — see rate-limits/xoserve-rate-limits.yml.
+  - >-
+    Credentials are long-lived Azure APIM subscription keys with no scopes, no expiry signal and no
+    rotation endpoint. The 3600s max-ttl above applies to any token an agent platform mints in front of
+    the key, not to the key itself, which must never be handed to a model.
+  - >-
+    Enumeration is the dominant abuse mode: postcode-based lookup on the Shipper and Supplier APIs
+    makes address-space sweeping trivial. Constrain agents to MPRNs already in scope for the stated purpose.

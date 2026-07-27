@@ -1,0 +1,57 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
+  (Xoserve Try Before You Buy API Service Subscription Guide, 8 pages, HTTP 200, retrieved 2026-07-27)
+name: Try Before You Buy (TBYB) API Service
+description: >-
+  Xoserve runs a named pre-purchase trial environment for its gas APIs, documented in its own
+  subscription guide. The guide states plainly that "the Try Before You Buy API service is configured
+  to work with a small dummy dataset" which "should have been provided to you" — i.e. the test data is
+  issued privately to the prospect, not published. Unusually, the trial does NOT run on the Azure API
+  Management portal that serves the production catalogue; it runs on a separate SAP Business
+  Technology Platform launchpad where the subscriber creates an Application, subscribes it to a
+  Product, and is shown the API Key and the API proxy endpoint to copy into their own application.
+test_vs_live:
+  separation: separate environment and separate portal
+  environments:
+    - name: Try Before You Buy (TBYB)
+      subscription_site: >-
+        https://flpnwc-ae37c3305.dispatcher.hana.ondemand.com/sites?siteId=f5507072-7604-4738-be32-2e27b4721995#Shell-home
+      platform: SAP Business Technology Platform launchpad ("My Subscriptions" and "API Catalogue" apps)
+      login: SAP S-User ID (e.g. S0123456789) or the associated email address
+      note: >-
+        The S-User ID is "an essential pre-requisite to consume the APIs" and is created and
+        maintained by Xoserve, not self-serve.
+    - name: Production
+      portal: https://discoveryapiportal.correla.com/
+      gateway: https://discoveryapi.correla.com
+      platform: Azure API Management
+  key_model: >-
+    An APIKey is issued per subscription and, verbatim from the guide, "is associated with each
+    created subscription and cannot be utilized for any other subscriptions." An Application Secret is
+    displayed but is explicitly not required.
+test_data:
+  published: false
+  detail: >-
+    A "small dummy dataset" is supplied privately by Xoserve to each trial subscriber. No test MPRNs,
+    meter serial numbers, postcodes or magic identifiers are published anywhere on the public site or
+    in the guide, so none are recorded here. Do not assume any MPRN is safe to use as a test value —
+    every MPRN in the live services identifies a real GB gas supply point.
+subscription_flow:
+  - Log in to the TBYB launchpad with an S-User ID issued by Xoserve.
+  - Open "My Subscriptions" and select Create; pick an API Product and name the subscription.
+  - Open the subscription to read the API Key shown at the top (the Application Secret is not needed).
+  - Select the Product to view its API Proxies; each proxy shows the API endpoint to call.
+  - Use "API Catalogue" to see every Product made available to your organisation.
+gating: >-
+  If My Subscriptions / API Catalogue apps or selectable Products do not appear, the guide states
+  access has not yet been granted or completed by Xoserve — the trial is itself gated on Xoserve
+  provisioning, not self-serve.
+fixtures: none published
+time_simulation: none published
+notes: >-
+  Terminology in the guide: API (the RESTful JSON/XML service), Product (a grouping of API proxies
+  carrying policies such as max allowed quota), Application (a consumer-created grouping of Products
+  that provides the API Key). Products and APIs are created and maintained by Xoserve; Applications by
+  the customer.

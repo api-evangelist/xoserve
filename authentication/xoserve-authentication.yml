@@ -1,0 +1,89 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Derived from openapi/xoserve-meter-asset-api-v1-openapi.yml,
+  openapi/xoserve-meter-asset-api-v2-openapi.yml, openapi/xoserve-shipper-api-openapi.yml,
+  openapi/xoserve-supplier-api-openapi.yml, then upgraded from the provider's own surfaces:
+  https://discoveryapiportal.correla.com/developer/apis?api-version=2022-04-01-preview
+  (subscriptionKeyParameterNames + authenticationSettings), the live WWW-Authenticate challenge on
+  https://discoveryapi.correla.com (2026-07-27),
+  https://www.xoserve.com/products-services/data-products/gas-apis/ and the Xoserve Try Before You Buy
+  API Service Subscription Guide.
+docs: https://www.xoserve.com/products-services/data-products/gas-apis/
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  - query
+  oauth2_flows: []
+  openid_connect: false
+  mutual_tls: false
+description: >-
+  A single auth model across the whole estate: an Azure API Management subscription key, passed either
+  as the `APIKey` request header or as a `subscription-key` query parameter, over HTTPS only. There is
+  no OAuth 2.0, no OpenID Connect, no mTLS and no consumer-consent grant of any kind — the portal
+  reports empty oAuth2AuthenticationSettings and empty openidAuthenticationSettings for all four APIs,
+  and /.well-known/openid-configuration returns 404 on every host. Prefer the header form so the
+  secret does not leak into logs, referrers or browser history.
+schemes:
+- name: apiKeyHeader
+  type: apiKey
+  in: header
+  parameter: APIKey
+  preferred: true
+  sources:
+  - openapi/xoserve-meter-asset-api-v1-openapi.yml
+  - openapi/xoserve-meter-asset-api-v2-openapi.yml
+  - openapi/xoserve-shipper-api-openapi.yml
+  - openapi/xoserve-supplier-api-openapi.yml
+- name: apiKeyQuery
+  type: apiKey
+  in: query
+  parameter: subscription-key
+  preferred: false
+  sources:
+  - openapi/xoserve-meter-asset-api-v1-openapi.yml
+  - openapi/xoserve-meter-asset-api-v2-openapi.yml
+  - openapi/xoserve-shipper-api-openapi.yml
+  - openapi/xoserve-supplier-api-openapi.yml
+challenge:
+  status: 401
+  header: 'WWW-Authenticate: AzureApiManagementKey realm="https://discoveryapi.correla.com/<api>",name="APIKey",type="header"'
+  observed: '2026-07-27'
+key_model:
+  issuer: Xoserve (via Correla-operated Azure API Management)
+  scope: >-
+    One key per subscription. The provider's subscription guide states the APIKey "is associated with
+    each created subscription and cannot be utilized for any other subscriptions." An Application
+    Secret is displayed alongside the key but is explicitly not required.
+  scopes: none — the API declares no OAuth scopes and no per-operation permission model
+  rotation: not documented
+  expiry: not documented
+  transport: HTTPS only (portal reports protocols ["https"])
+access_gate:
+  self_serve: false
+  subscription_required: true
+  approval_required: true
+  routes:
+  - product: Supply Point Quantities (Shipper API)
+    eligibility: Licensed GB gas Shippers only
+    apply_to: xoserve.customer.lifecycle.team@xoserve.co.uk
+    issuance: Access details provided after the subscription contract is countersigned.
+  - product: Supply Point Enquiry (Supplier API)
+    eligibility: REC parties, subject to the REC Data Access Matrix
+    apply_to: enquiries@recmanager.co.uk (Retail Energy Code Company)
+    administration: REC Portal (https://recportal.co.uk/), including an annual GES password reset process
+  - product: Meter Asset Enquiry (Meter Asset v1/v2)
+    eligibility: REC parties, subject to the REC Data Access Matrix
+    apply_to: enquiries@recmanager.co.uk (Retail Energy Code Company)
+    administration: REC Portal (https://recportal.co.uk/)
+  trial:
+    name: Try Before You Buy
+    login: SAP S-User ID issued by Xoserve
+    detail: sandbox/xoserve-sandbox.yml
+notes: >-
+  Browsing is open, calling is not: the portal catalogue, product descriptions and OpenAPI exports are
+  all reachable anonymously, but there is no self-serve signup that ends in a working key. Because a
+  key is long-lived, unscoped and carries no expiry signal, it must never be handed to a model or
+  embedded client-side — see agentic-access/xoserve-agentic-access.yml.
