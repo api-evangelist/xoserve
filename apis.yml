@@ -45,13 +45,12 @@ apis:
 - aid: xoserve:xoserve-shipper-api
   name: Xoserve Shipper API
   description: >-
-    Bundled by Xoserve as the Supply Point Quantities service. Lets gas Shippers view the
-    proposed Formula Year (Billing) Annual Quantity value for a meter point ahead of the
-    late-March notification to the current Shipper, together with meter point and network
-    information. A single GET operation filtered by MPRN, or by postcode combined with
-    optional address detail (house_no, street, town, county, country, sub_building_name,
-    dependent_street, dependent_local). Returns JSON or XML. Available to Gas Shippers only,
-    after contract countersigning.
+    Bundled by Xoserve as the Supply Point Quantities service. Lets gas Shippers view the proposed Formula
+    Year (Billing) Annual Quantity value for a meter point ahead of the late-March notification to the
+    current Shipper, together with meter point and network information. A single GET operation filtered
+    by MPRN, or by postcode combined with optional address detail (house_no, street, town, county, country,
+    sub_building_name, dependent_street, dependent_local). Returns JSON or XML. Available to Gas Shippers
+    only, after contract countersigning.
   humanURL: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
   baseURL: https://discoveryapi.correla.com/shipper/v1
   tags:
@@ -63,7 +62,9 @@ apis:
   - type: OpenAPI
     url: openapi/xoserve-shipper-api-openapi.yml
   - type: Overlay
-    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
+    name: >-
+      API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from
+      the anonymous export
     url: overlays/xoserve-shipper-api-overlay.yaml
   - type: JSONSchema
     name: Provider-published component schemas
@@ -82,15 +83,15 @@ apis:
   - type: SignUp
     url: https://discoveryapiportal.correla.com/signin
   - type: Pricing
-    url: https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
+    url: >-
+      https://www.xoserve.com/media/7975/xoserve-try-before-you-buy-api-service-subscription-guide.pdf
 - aid: xoserve:xoserve-supplier-api
   name: Xoserve Supplier API
   description: >-
-    Bundled by Xoserve as the Supply Point Enquiry service, part of the Gas Enquiry Service
-    (GES). Exposes detailed supply meter point information, filtered by MPRN, address_id or
-    postcode combined with optional address detail. Aimed at organisations working to improve
-    change-of-supply and data assurance processes. Access is arranged through the Retail
-    Energy Code Company (RECCo), not directly with Xoserve.
+    Bundled by Xoserve as the Supply Point Enquiry service, part of the Gas Enquiry Service (GES). Exposes
+    detailed supply meter point information, filtered by MPRN, address_id or postcode combined with optional
+    address detail. Aimed at organisations working to improve change-of-supply and data assurance processes.
+    Access is arranged through the Retail Energy Code Company (RECCo), not directly with Xoserve.
   humanURL: https://discoveryapiportal.correla.com/api-details#api=supplier&operation=getSupplier_1
   baseURL: https://discoveryapi.correla.com/supplier/v1
   tags:
@@ -102,7 +103,9 @@ apis:
   - type: OpenAPI
     url: openapi/xoserve-supplier-api-openapi.yml
   - type: Overlay
-    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
+    name: >-
+      API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from
+      the anonymous export
     url: overlays/xoserve-supplier-api-overlay.yaml
   - type: JSONSchema
     name: Provider-published component schemas
@@ -122,69 +125,22 @@ apis:
     url: https://discoveryapiportal.correla.com/
   - type: SignUp
     url: https://discoveryapiportal.correla.com/signin
-- aid: xoserve:xoserve-meter-asset-api-v1
-  name: Xoserve Meter Asset API v1
-  description: >-
-    Bundled by Xoserve as the Meter Asset Enquiry service. Exposes detailed meter asset
-    information for GB gas meter points, filtered by MPRN and/or MSN (meter serial number).
-    Intended for organisations improving data assurance processes. Access is arranged
-    through the Retail Energy Code Company (RECCo).
-  humanURL: https://discoveryapiportal.correla.com/api-details#api=meter-asset&operation=getMeterAsset_1
-  baseURL: https://discoveryapi.correla.com/meter-asset/v1
-  tags:
-  - Gas
-  - Meter Asset
-  - Data Assurance
+- aid: xoserve:xoserve-meter-asset-api-v1-openapi
+  name: Xoserve Meter Asset (Xoserve Meter Asset Api V1)
+  description: Xoserve Meter Asset from Xoserve, described in OpenAPI.
+  humanURL: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
+  baseURL: https://discoveryapi.correla.com/shipper/v1
   properties:
   - type: OpenAPI
     url: openapi/xoserve-meter-asset-api-v1-openapi.yml
-  - type: Overlay
-    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
-    url: overlays/xoserve-meter-asset-api-v1-overlay.yaml
-  - type: JSONSchema
-    name: Provider-published component schemas
-    url: json-schema/xoserve-meter-asset-api-v1-components.json
-  - type: Examples
-    name: Provider-published response example
-    url: examples/xoserve-meter-asset-api-v1-response-example.json
-  - type: APIReference
-    url: https://discoveryapiportal.correla.com/api-details#api=meter-asset&operation=getMeterAsset_1
-  - type: Documentation
-    url: https://www.xoserve.com/products-services/data-products/gas-apis/
-  - type: Portal
-    url: https://discoveryapiportal.correla.com/
-- aid: xoserve:xoserve-meter-asset-api-v2
-  name: Xoserve Meter Asset API v2
-  description: >-
-    Version 2 of the Meter Asset Enquiry API, described by Xoserve as containing additional
-    output fields compared with v1. Same MPRN and MSN filters, same segment-versioned
-    gateway path. This is the version bundled into the current Meter Asset Enquiry product.
-  humanURL: https://discoveryapiportal.correla.com/api-details#api=meter-asset-v2&operation=getMeterAsset_1
-  baseURL: https://discoveryapi.correla.com/meter-asset/v2
-  tags:
-  - Gas
-  - Meter Asset
-  - Data Assurance
+- aid: xoserve:xoserve-meter-asset-api-v2-openapi
+  name: Xoserve Meter Asset (Xoserve Meter Asset Api V2)
+  description: Xoserve Meter Asset from Xoserve, described in OpenAPI.
+  humanURL: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
+  baseURL: https://discoveryapi.correla.com/shipper/v1
   properties:
   - type: OpenAPI
     url: openapi/xoserve-meter-asset-api-v2-openapi.yml
-  - type: Overlay
-    name: API Evangelist overlay — reconstitutes the operation, parameters and schemas Azure APIM strips from the anonymous export
-    url: overlays/xoserve-meter-asset-api-v2-overlay.yaml
-  - type: JSONSchema
-    name: Provider-published component schemas
-    url: json-schema/xoserve-meter-asset-api-v2-components.json
-  - type: Examples
-    name: Provider-published response example
-    url: examples/xoserve-meter-asset-api-v2-response-example.json
-  - type: AgentSkill
-    url: skills/xoserve-enquire-meter-asset.md
-  - type: APIReference
-    url: https://discoveryapiportal.correla.com/api-details#api=meter-asset-v2&operation=getMeterAsset_1
-  - type: Documentation
-    url: https://www.xoserve.com/products-services/data-products/gas-apis/
-  - type: Portal
-    url: https://discoveryapiportal.correla.com/
 common:
 - type: DomainSecurity
   url: security/xoserve-domain-security.yml
