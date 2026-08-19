@@ -1,0 +1,23 @@
+{
+  "item": [],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://discoveryapi.correla.com/meter-asset",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "noauth"
+  },
+  "info": {
+    "_postman_id": "b7ad965e-f343-43c8-becc-023fe3b5b4f0",
+    "name": "Meter Asset",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The purpose of this API is to expose detailed Meter Asset information, enabling subscribers to filter the data by MSN and MPRN details",
+      "type": "text/plain"
+    }
+  }
+}

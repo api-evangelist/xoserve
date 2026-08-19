@@ -1,0 +1,23 @@
+{
+  "item": [],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://discoveryapi.correla.com/supplier",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "noauth"
+  },
+  "info": {
+    "_postman_id": "e693dd64-b97f-4824-bb6f-d4282067e978",
+    "name": "Supplier",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The purpose of this API is to expose detailed Supply Meter Point information, enabling subscribers to filter the data by MPRN, Address ID and Address details.",
+      "type": "text/plain"
+    }
+  }
+}
