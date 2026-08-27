@@ -125,22 +125,6 @@ apis:
     url: https://discoveryapiportal.correla.com/
   - type: SignUp
     url: https://discoveryapiportal.correla.com/signin
-- aid: xoserve:xoserve-meter-asset-api-v1-openapi
-  name: Xoserve Meter Asset (Xoserve Meter Asset Api V1)
-  description: Xoserve Meter Asset from Xoserve, described in OpenAPI.
-  humanURL: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
-  baseURL: https://discoveryapi.correla.com/shipper/v1
-  properties:
-  - type: OpenAPI
-    url: openapi/xoserve-meter-asset-api-v1-openapi.yml
-- aid: xoserve:xoserve-meter-asset-api-v2-openapi
-  name: Xoserve Meter Asset (Xoserve Meter Asset Api V2)
-  description: Xoserve Meter Asset from Xoserve, described in OpenAPI.
-  humanURL: https://discoveryapiportal.correla.com/api-details#api=shipper&operation=getShipper_1
-  baseURL: https://discoveryapi.correla.com/shipper/v1
-  properties:
-  - type: OpenAPI
-    url: openapi/xoserve-meter-asset-api-v2-openapi.yml
 common:
 - type: DomainSecurity
   url: security/xoserve-domain-security.yml
