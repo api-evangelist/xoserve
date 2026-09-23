@@ -1,0 +1,23 @@
+{
+  "provider": "xoserve",
+  "sources": [
+    "xoserve-meter-asset-api-v1-openapi.yml",
+    "xoserve-meter-asset-api-v2-openapi.yml",
+    "xoserve-shipper-api-openapi.yml",
+    "xoserve-supplier-api-openapi.yml"
+  ],
+  "outputs": [],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "no openapi/_original/ archive: this run re-split PREVIOUSLY REFINED output, so any base URL it carries is inherited from an earlier pass rather than read from a document the provider published",
+    "produced no outputs (4 source(s) have no operations) \u2014 sources left in place rather than archived"
+  ],
+  "notes": [
+    "xoserve-meter-asset-api-v1-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "xoserve-meter-asset-api-v2-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "xoserve-shipper-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "xoserve-supplier-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0"
+  ],
+  "skipped": []
+}
