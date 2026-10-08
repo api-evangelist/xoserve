@@ -82,3 +82,37 @@ notes: >-
   Only figures Xoserve actually publishes are recorded. The band allowances are transcribed verbatim
   from the "How much does the Supply Point Quantities API cost?" table on the Gas APIs page. No price
   per band, no currency amount and no free tier is asserted, because none is published.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units:
+  - request
+  plans:
+  - name: Try Before You Buy (TBYB)
+    access: trial
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Supply Point Quantities
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units:
+    - request
+    periods:
+    - year
+  - name: Supply Point Enquiry
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units: []
+    periods: []
+  - name: Meter Asset Enquiry
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units: []
+    periods: []
