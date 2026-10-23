@@ -154,6 +154,8 @@ apis:
   - type: SignUp
     url: https://discoveryapiportal.correla.com/signin
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/xoserve/overview
 - type: DomainSecurity
   url: security/xoserve-domain-security.yml
 - type: Authentication
